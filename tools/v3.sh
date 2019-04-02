@@ -1,5 +1,5 @@
 #!/bin/bash
-case $v2ray_transport in
+Case $v2ray_transport in
 [5-8])
 	_transport=$(($v2ray_transport + 1))
 	;;
@@ -15,100 +15,100 @@ case $v2ray_transport in
 *)
 	_transport=$v2ray_transport
 	;;
-esac
+Esac
 
-if [[ $v2ray_transport == 17 ]]; then
-	v2ray_id=$(cat /proc/sys/kernel/random/uuid)
-fi
+If [[ $v2ray_transport == 17 ]]; then
+	V2ray_id=$(cat /proc/sys/kernel/random/uuid)
+Fi
 
-cat >$backup <<-EOF
+Cat >$backup <<-EOF
 # -----------------------------------
-# 警告...请不要修改或删除这个文件...谢谢
-# 警告...请不要修改或删除这个文件...谢谢
-# 警告...请不要修改或删除这个文件...谢谢
+# 警告...Please do not modify or delete this file...thanks
+# 警告...Please do not modify or delete this file...thanks
+# 警告...Please do not modify or delete this file...thanks
 # -----------------------------------
 
-# ---- 再次提醒 ----
-# 大胸弟...如果你看到了这个...记得不要修改或更改这个文件
+# ---- Remind again----
+#大胸弟... If you see this... remember not to modify or change this file
 
-# ---- 说明 ----
-# 嗯……这个文件呢，是用来备份一些设置的
+# ---- Description----
+#嗯...This file is used to back up some settings.
 #
-mark=v3
+Mark=v3
 #
 #
 
-# ---- V2Ray 传输协议 -----
-v2ray_transport=$_transport
+# ---- V2Ray Transmission Protocol-----
+V2ray_transport=$_transport
 
-#---- V2Ray 端口 -----
-v2ray_port=$v2ray_port
+#---- V2Ray Port-----
+V2ray_port=$v2ray_port
 
 #---- UUID -----
-v2ray_id=$v2ray_id
+V2ray_id=$v2ray_id
 
 #---- alterId -----
 alterId=$alterId
 
-#---- V2Ray 动态端口开始 -----
+#---- V2Ray Dynamic Port Start-----
 v2ray_dynamicPort_start=$v2ray_dynamicPort_start
 
-#---- V2Ray 动态端口结束 -----
+#---- V2Ray Dynamic Port End-----
 v2ray_dynamicPort_end=$v2ray_dynamicPort_end
 
-#---- 域名 -----
-domain=$domain
+#---- Domain Name-----
+Domain=$domain
 
 #---- caddy -----
-caddy=$caddy_status
+Caddy=$caddy_status
 
 #---- Shadowsocks -----
-shadowsocks=$shadowsocks_status
+Shadowsocks=$shadowsocks_status
 
-#---- Shadowsocks 端口 -----
-ssport=$ssport
+#---- Shadowsocks Port-----
+Ssport=$ssport
 
-#---- Shadowsocks 密码 -----
-sspass=$sspass
+#---- Shadowsocks Password-----
+Sspass=$sspass
 
-#---- Shadowsocks 加密协议 -----
-ssciphers=$ssciphers
+#---- Shadowsocks Encryption Protocol-----
+Ssciphers=$ssciphers
 
-#---- 屏蔽广告 -----
-ban_ad=$blocked_ad_status
+#---- Block ads-----
+Ban_ad=$blocked_ad_status
 
-#---- 网站伪装 -----
-path_status=$path_status
+#---- Website Camouflage-----
+Path_status=$path_status
 
-#---- 伪装的路径 -----
-path=$path
+#---- Camouflaged path -----
+Path=$path
 
-#---- 伪装的网址 -----
-proxy_site=$proxy_site
+#---- Disguised URL -----
+Proxy_site=$proxy_site
 
 #---- Socks -----
-socks=
+Socks=
 
-#---- Socks 端口-----
-socks_port=233
+#---- Socks Port-----
+Socks_port=233
 
-#---- Socks 用户名 -----
-socks_username=233blog
+#---- Socks Username-----
+Socks_username=233blog
 
-#---- Socks 密码 -----
-socks_userpass=233blog.com
+#---- Socks Password-----
+Socks_userpass=233blog.com
 
 #---- MTProto -----
-mtproto=
+Mtproto=
 
-#---- MTProto 端口-----
-mtproto_port=233
+#---- MTProto Port-----
+Mtproto_port=233
 
-#---- MTProto 用户密钥 -----
-mtproto_secret=lalala
+#---- MTProto User Key -----
+Mtproto_secret=lalala
 
-#---- 屏蔽 BT -----
-ban_bt=true
+#---- Shield BT -----
+Ban_bt=true
 EOF
 
 . $backup
