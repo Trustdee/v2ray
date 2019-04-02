@@ -1,132 +1,132 @@
 #!/bin/bash
-backup="/etc/v2ray/233blog_v2ray_backup.txt"
-v2ray_transport=$(sed -n '17p' $backup)
-v2ray_port=$(sed -n '19p' $backup)
-v2ray_id=$(sed -n '21p' $backup)
+Backup="/etc/v2ray/233blog_v2ray_backup.txt"
+V2ray_transport=$(sed -n '17p' $backup)
+V2ray_port=$(sed -n '19p' $backup)
+V2ray_id=$(sed -n '21p' $backup)
 v2ray_dynamicPort_start=$(sed -n '23p' $backup)
 v2ray_dynamicPort_end=$(sed -n '25p' $backup)
-domain=$(sed -n '27p' $backup)
-caddy_status=$(sed -n '29p' $backup)
-shadowsocks_status=$(sed -n '31p' $backup)
-ssport=$(sed -n '33p' $backup)
-sspass=$(sed -n '35p' $backup)
-ssciphers=$(sed -n '37p' $backup)
-blocked_ad_status=$(sed -n '39p' $backup)
-ws_path_status=$(sed -n '41p' $backup)
-ws_path=$(sed -n '43p' $backup)
-proxy_site=$(sed '$!d' $backup)
-if [[ $caddy_status == "true" ]]; then
-	caddy_installed=true
-fi
-if [[ $shadowsocks_status == "true" ]]; then
-	shadowsocks=true
-fi
-if [[ $blocked_ad_status == "true" ]]; then
-	is_blocked_ad=true
-fi
-if [[ $ws_path_status == "true" ]]; then
-	is_ws_path=true
-fi
+Domain=$(sed -n '27p' $backup)
+Caddy_status=$(sed -n '29p' $backup)
+Shadowsocks_status=$(sed -n '31p' $backup)
+Ssport=$(sed -n '33p' $backup)
+Sspass=$(sed -n '35p' $backup)
+Ssciphers=$(sed -n '37p' $backup)
+Blocked_ad_status=$(sed -n '39p' $backup)
+Ws_path_status=$(sed -n '41p' $backup)
+Ws_path=$(sed -n '43p' $backup)
+Proxy_site=$(sed '$!d' $backup)
+If [[ $caddy_status == "true" ]]; then
+	Caddy_installed=true
+Fi
+If [[ $shadowsocks_status == "true" ]]; then
+	Shadowsocks=true
+Fi
+If [[ $blocked_ad_status == "true" ]]; then
+	Is_blocked_ad=true
+Fi
+If [[ $ws_path_status == "true" ]]; then
+	Is_ws_path=true
+Fi
 
-cat >/etc/v2ray/233blog_v2ray_backup.conf <<-EOF
+Cat >/etc/v2ray/233blog_v2ray_backup.conf <<-EOF
 # -----------------------------------
-# 警告...请不要修改或删除这个文件...谢谢
-# 警告...请不要修改或删除这个文件...谢谢
-# 警告...请不要修改或删除这个文件...谢谢
+# 警告...Please do not modify or delete this file...thanks
+# 警告...Please do not modify or delete this file...thanks
+# 警告...Please do not modify or delete this file...thanks
 # -----------------------------------
 
-# ---- 再次提醒 ----
-# 大胸弟...如果你看到了这个...记得不要修改或更改这个文件
+# ---- Remind again----
+#大胸弟... If you see this... remember not to modify or change this file
 
-# ---- 说明 ----
-# 嗯……这个文件呢，是用来备份一些设置的
+# ---- Description----
+#嗯...This file is used to back up some settings.
 #
 #mark=v3
 #
 #
 
-# ---- V2Ray 传输协议 -----
-v2ray_transport=$v2ray_transport
+# ---- V2Ray Transmission Protocol-----
+V2ray_transport=$v2ray_transport
 
-#---- V2Ray 端口 -----
-v2ray_port=$v2ray_port
+#---- V2Ray Port-----
+V2ray_port=$v2ray_port
 
 #---- UUID -----
-v2ray_id=$v2ray_id
+V2ray_id=$v2ray_id
 
 #---- alterId -----
 alterId=233
 
-#---- V2Ray 动态端口开始 -----
+#---- V2Ray Dynamic Port Start-----
 v2ray_dynamicPort_start=$v2ray_dynamicPort_start
 
-#---- V2Ray 动态端口结束 -----
+#---- V2Ray Dynamic Port End-----
 v2ray_dynamicPort_end=$v2ray_dynamicPort_end
 
-#---- 域名 -----
-domain=$domain
+#---- Domain Name-----
+Domain=$domain
 
 #---- caddy -----
-caddy_status=$caddy_installed
+Caddy_status=$caddy_installed
 
 #---- Shadowsocks -----
-shadowsocks_status=$shadowsocks
+Shadowsocks_status=$shadowsocks
 
-#---- Shadowsocks 端口 -----
-ssport=$ssport
+#---- Shadowsocks Port-----
+Ssport=$ssport
 
-#---- Shadowsocks 密码 -----
-sspass=$sspass
+#---- Shadowsocks Password-----
+Sspass=$sspass
 
-#---- Shadowsocks 加密协议 -----
-ssciphers=$ssciphers
+#---- Shadowsocks Encryption Protocol-----
+Ssciphers=$ssciphers
 
-#---- 屏蔽广告 -----
-blocked_ad_status=$is_blocked_ad
+#---- Block ads-----
+Blocked_ad_status=$is_blocked_ad
 
-#---- 网站伪装 -----
-path_status=$is_ws_path
+#---- Website Camouflage-----
+Path_status=$is_ws_path
 
-#---- 伪装的路径 -----
-path=$ws_path
+#---- Camouflaged path -----
+Path=$ws_path
 
-#---- 伪装的网址 -----
-proxy_site=$proxy_site
+#---- Disguised URL -----
+Proxy_site=$proxy_site
 
 #---- Socks -----
-socks=
+Socks=
 
-#---- Socks 端口-----
-socks_port=233
+#---- Socks Port-----
+Socks_port=233
 
-#---- Socks 用户名 -----
-socks_username=233blog
+#---- Socks Username-----
+Socks_username=233blog
 
-#---- Socks 密码 -----
-socks_userpass=233blog.com
+#---- Socks Password-----
+Socks_userpass=233blog.com
 
 #---- MTProto -----
-mtproto=
+Mtproto=
 
-#---- MTProto 端口-----
-mtproto_port=233
+#---- MTProto Port-----
+Mtproto_port=233
 
-#---- MTProto 用户密钥 -----
-mtproto_secret=lalala
+#---- MTProto User Key -----
+Mtproto_secret=lalala
 
-#---- 屏蔽 BT -----
-ban_bt=true
+#---- Shield BT -----
+Ban_bt=true
 		EOF
-if [[ -f /usr/local/bin/v2ray ]]; then
-	cp -f /etc/v2ray/233boy/v2ray/v2ray.sh /usr/local/sbin/v2ray
-	chmod +x /usr/local/sbin/v2ray
-	rm -rf $backup
-	rm -rf /usr/local/bin/v2ray
-fi
+If [[ -f /usr/local/bin/v2ray ]]; then
+	Cp -f /etc/v2ray/233boy/v2ray/v2ray.sh /usr/local/sbin/v2ray
+	Chmod +x /usr/local/sbin/v2ray
+	Rm -rf $backup
+	Rm -rf /usr/local/bin/v2ray
+Fi
 
-echo
-echo -e " 哇哦...脚本差点就跪了..."
-echo
-echo -e "\n $yellow 警告: 请重新登录 SSH 以避免出现 v2ray 命令未找到的情况。$none  \n" && exit 1
-echo
-exit 1
+Echo
+Echo -e " Wow... the script is almost stunned..."
+Echo
+Echo -e "\n $yellow Warning: Please log back in to SSH to avoid the v2ray command not found. $none \n" && exit 1
+Echo
+Exit 1
