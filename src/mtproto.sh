@@ -22,59 +22,59 @@ _mtproto_info() {
 _mtproto_main() {
 	if [[ $mtproto ]]; then
 
-		while :; do
-			echo
-			echo -e "$yellow 1. $none查看 Telegram MTProto 配置信息"
-			echo
-			echo -e "$yellow 2. $none修改 Telegram MTProto 端口"
-			echo
-			echo -e "$yellow 3. $none修改 Telegram MTProto 密钥"
-			echo
-			echo -e "$yellow 4. $none关闭 Telegram MTProto"
-			echo
-			read -p "$(echo -e "请选择 [${magenta}1-4$none]:")" _opt
-			if [[ -z $_opt ]]; then
-				error
-			else
-				case $_opt in
-				1)
-					_mtproto_info
-					break
-					;;
-				2)
-					change_mtproto_port
-					break
+		While :; do 
+			echo 
+			echo -e "$yellow 1. $noneView Telegram MTProto configuration information " 
+			echo 
+			echo -e "$yellow 2. $none Modify Telegram MTProto port " 
+			echo 
+			echo -e "$yellow 3. $ noneModify Telegram MTProto key " 
+			echo 
+			echo -e "$yellow 4. $none turn off Telegram MTProto" 
+			echo 
+			read -p "$(echo -e "Please select [${magenta}1-4$none]:")" _opt 
+			if [ [ -z $_opt ]]; then 
+				error 
+			else 
+				case $_opt in 
+				1) 
+					_mtproto_info 
+					break 
+					;; 
+				2) 
+					change_mtproto_port 
+					break 
 					;;
 				3)
 					change_mtproto_secret
 					break
-					;;
-				4)
-					disable_mtproto
-					break
-					;;
-				*)
-					error
-					;;
-				esac
-			fi
+					;; 
+				4) 
+					disable_mtproto 
+					break 
+					;; 
+				*) 
+					error 
+					;; 
+				esac 
+			fi 
 
-		done
-	else
-		_mtproto_ask
-	fi
-}
-_mtproto_ask() {
-	echo
-	echo
-	echo -e " $red大佬...你没有配置 Telegram MTProto $none...不过现在想要配置的话也是可以的 ^_^"
-	echo
-	echo
-	new_mtproto_secret="dd$(date | md5sum | cut -c-30)"
-	while :; do
-		echo -e "是否配置 ${yellow}Telegram MTProto${none} [${magenta}Y/N$none]"
-		read -p "$(echo -e "(默认 [${cyan}N$none]):") " new_mtproto
-		[[ -z "$new_mtproto" ]] && new_mtproto="n"
+		done 
+	else 
+		_mtproto_ask 
+	fi 
+} 
+_mtproto_ask() { 
+	echo 
+	echo 
+	echo -e " $red big 佬... you have not configured Telegram MTProto $none... but now think It is 
+	ok to configure it ^_^" 
+	echo 
+	echo new_mtproto_secret="dd$(date | md5sum | cut -c-30)" 
+	while :; do 
+		echo -e "Do you configure ${yellow}Telegram MTProto${none} [ ${magenta}Y/N$none]" 
+		read -p "$(echo -e "(default [${cyan}N$none]):") " new_mtproto 
+		[[ -z "$new_mtproto" ]] && new_mtproto ="n"
 		if [[ "$new_mtproto" == [Yy] ]]; then
 			echo
 			mtproto=true
@@ -124,54 +124,54 @@ disable_mtproto() {
 			echo
 			break
 		elif [[ "$y_n" == [Nn] ]]; then
-			echo
-			echo -e " $green已取消关闭 Telegram MTProto ....$none"
-			echo
-			break
-		else
-			error
-		fi
+			Echo 
+			echo -e " $green has canceled closing Telegram MTProto ....$none" 
+			echo 
+			break 
+		else 
+			error 
+		fi 
 
-	done
-}
-mtproto_port_config() {
-	local random=$(shuf -i20001-65535 -n1)
-	echo
-	while :; do
-		echo -e "请输入 "$yellow"Telegram MTProto"$none" 端口 ["$magenta"1-65535"$none"]，不能和 "$yellow"V2Ray"$none" 端口相同"
-		read -p "$(echo -e "(默认端口: ${cyan}${random}$none):") " new_mtproto_port
-		[ -z "$new_mtproto_port" ] && new_mtproto_port=$random
-		case $new_mtproto_port in
-		$v2ray_port)
-			echo
-			echo " 不能和 V2Ray 端口一毛一样...."
+	done 
+} 
+mtproto_port_config() { 
+	local random=$(shuf -i20001-65535 -n1) 
+	echo 
+	while :; do 
+		echo - e "Please enter "$yellow"Telegram MTProto"$none" port["$magenta"1-65535"$none"], not the same as "$yellow"V2Ray"$none" port" 
+		read -p "$(echo -e "(default port: ${cyan}${random}$none):") " new_mtproto_port 
+		[ -z "$new_mtproto_port" ] && new_mtproto_port=$random 
+		case $new_mtproto_port in 
+		$v2ray_port) 
+			echo 
+			echo "Cannot and V2Ray port Same as a hair...."
 			error
 			;;
-		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
-			if [[ $v2ray_transport == [45] ]]; then
-				local tls=ture
-			fi
-			if [[ $tls && $new_mtproto_port == "80" ]] || [[ $tls && $new_mtproto_port == "443" ]]; then
+		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0 -9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9 ] | 65[0-4][0-9][0-9] | 655[0-3][0-5]) 
+			if [[ $v2ray_transport == [45] ]]; then 
+				local tls=ture 
+			fi 
+			If [[ $tls && $new_mtproto_port == "80" ]] || [[ $tls && $new_mtproto_port == "443" ]]; then 
+				echo 
+				echo -e "Because you have selected "$green"WebSocket + TLS $none or $green HTTP/2"$none" transport protocol. " 
+				echo 
+				echo -e " so you can't select "$magenta"80"$none" or "$magenta"443"$none" port" 
+				error 
+			elif [[ $ dynamicPort ]] &&[[ $v2ray_dynamicPort_start == $new_mtproto_port || $v2ray_dynamicPort_end == $new_mtproto_port ]]; then
 				echo
-				echo -e "由于你已选择了 "$green"WebSocket + TLS $none或$green HTTP/2"$none" 传输协议."
-				echo
-				echo -e "所以不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
-				error
-			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $new_mtproto_port || $v2ray_dynamicPort_end == $new_mtproto_port ]]; then
-				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
-				error
-			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_mtproto_port && $new_mtproto_port -le $v2ray_dynamicPort_end ]]; then
-				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
-				error
-			elif [[ $shadowsocks && $new_mtproto_port == $ssport ]]; then
-				echo
-				echo -e "抱歉, 此端口跟 Shadowsocks 端口冲突...当前 Shadowsocks 端口: ${cyan}$ssport$none"
-				error
-			elif [[ $socks && $new_mtproto_port == $socks_port ]]; then
-				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}" 
+				error 
+			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_mtproto_port && $new_mtproto_port -le $v2ray_dynamicPort_end ]]; then 
+				echo 
+				echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}" 
+				error 
+			elif [[ $shadowsocks && $new_mtproto_port == $ssport ]]; then 
+				echo 
+				echo -e "Sorry, this port conflicts with the Shadowsocks port...current Shadowsocks port: ${cyan}$ssport$none" 
+				error 
+			elif [[ $socks && $new_mtproto_port == $socks_port ]]; then 
+				echo 
+				echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 				error
 			else
 				echo
@@ -199,7 +199,7 @@ change_mtproto_secret() {
 		case $y_n in
 		n | N)
 			echo
-			echo -e " 已取消更改.... "
+			echo -e "Canceled changes.... " 
 			echo
 			break
 			;;
@@ -225,49 +225,49 @@ change_mtproto_port() {
 	while :; do
 		echo -e "请输入新的 "$yellow"Telegram MTProto"$none" 端口 ["$magenta"1-65535"$none"]"
 		read -p "$(echo -e "(当前端口: ${cyan}${mtproto_port}$none):") " new_mtproto_port
-		[ -z "$new_mtproto_port" ] && error && continue
-		case $new_mtproto_port in
-		$mtproto_port)
-			echo
-			echo " 不能跟当前端口一毛一样...."
-			error
-			;;
-		$v2ray_port)
-			echo
-			echo " 不能和 V2Ray 端口一毛一样...."
-			error
-			;;
-		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
-			if [[ $v2ray_transport == [45] ]]; then
-				local tls=ture
-			fi
-			if [[ $tls && $new_mtproto_port == "80" ]] || [[ $tls && $new_mtproto_port == "443" ]]; then
+		[ -z "$new_mtproto_port" ] && error && continue 
+		case $new_mtproto_port in 
+		$mtproto_port) 
+			echo 
+			echo " Can't be the same as the current port...." 
+			error 
+			;; 
+		$v2ray_port) 
+			echo 
+			echo " Can't be the same as the V2Ray port ...." 
+			error 
+			;; 
+		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9 ][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][ 0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5]) 
+			if [[ $v2ray_transport == [45] ] ]; then 
+				local tls=ture 
+			fi 
+			if [[ $tls && $new_mtproto_port == "80" ]] || [[ $tls && $new_mtproto_port == "443" ]]; then 
 				echo
-				echo -e "由于你已选择了 "$green"WebSocket + TLS $none或$green HTTP/2"$none" 传输协议."
-				echo
-				echo -e "所以不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+				Echo -e "Because you have selected "$green"WebSocket + TLS $none or $green HTTP/2"$none" transport protocol. " 
+				echo 
+				echo -e " so you can't select "$magenta"80"$none" or "$magenta"443"$none" port" 
+				error 
+			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $new_mtproto_port || $v2ray_dynamicPort_end == $new_mtproto_port ]]; then 
+				echo 
+				echo -e " Sorry, this port and V2Ray dynamic port conflict, the current V2Ray dynamic port range is: ${cyan}$port_range${none}" 
+				error 
+			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_mtproto_port && $new_mtproto_port -le $v2ray_dynamicPort_end ]]; Then 
+				echo 
+				echo -e "Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}" 
 				error
-			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $new_mtproto_port || $v2ray_dynamicPort_end == $new_mtproto_port ]]; then
-				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
-				error
-			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_mtproto_port && $new_mtproto_port -le $v2ray_dynamicPort_end ]]; then
-				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
-				error
-			elif [[ $shadowsocks && $new_mtproto_port == $ssport ]]; then
-				echo
-				echo -e "抱歉, 此端口跟 Shadowsocks 端口冲突...当前 Shadowsocks 端口: ${cyan}$ssport$none"
-				error
-			elif [[ $socks && $new_mtproto_port == $socks_port ]]; then
-				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
-				error
-			else
-				echo
-				echo
-				echo -e "$yellow socks 端口 = $cyan$new_mtproto_port$none"
-				echo "----------------------------------------------------------------"
+			Elif [[ $shadowsocks && $new_mtproto_port == $ssport ]]; then 
+				echo 
+				echo -e "Sorry, this port conflicts with the Shadowsocks port...current Shadowsocks port: ${cyan}$ssport$none" 
+				error 
+			elif [[ $ Socks && $new_mtproto_port == $socks_port ]]; then 
+				echo 
+				echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none" 
+				error 
+			else 
+				echo 
+				echo 
+				echo -e "$ Yellow socks port = $cyan$new_mtproto_port$none" 
+				echo "------------------------------------- ---------------------------"
 				echo
 				pause
 				backup_config mtproto_port
