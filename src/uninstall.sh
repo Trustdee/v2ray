@@ -8,13 +8,13 @@ while :; do
 		Y | y)
 			is_uninstall_v2ray=true
 			echo
-			echo -e "$yellow 卸载 V2Ray = ${cyan}是${none}"
+			Echo -e "$yellow Uninstall V2Ray = ${cyan} is ${none}"
 			echo
 			break
 			;;
 		N | n)
 			echo
-			echo -e "$red 卸载已取消...$none"
+			Echo -e "$red Uninstall has been canceled...$none"
 			echo
 			break
 			;;
@@ -22,7 +22,7 @@ while :; do
 			error
 			;;
 		esac
-	fi
+	be
 done
 
 if [[ $caddy && $is_uninstall_v2ray ]] && [[ -f /usr/local/bin/caddy && -f /etc/caddy/Caddyfile ]]; then
@@ -36,13 +36,13 @@ if [[ $caddy && $is_uninstall_v2ray ]] && [[ -f /usr/local/bin/caddy && -f /etc/
 			Y | y)
 				is_uninstall_caddy=true
 				echo
-				echo -e "$yellow 卸载 Caddy = ${cyan}是${none}"
+				Echo -e "$yellow Uninstall Caddy = ${cyan} is ${none}"
 				echo
 				break
 				;;
 			N | n)
 				echo
-				echo -e "$yellow 卸载 Caddy = ${cyan}否${none}"
+				Echo -e "$yellow Uninstall Caddy = ${cyan} No ${none}"
 				echo
 				break
 				;;
@@ -50,9 +50,9 @@ if [[ $caddy && $is_uninstall_v2ray ]] && [[ -f /usr/local/bin/caddy && -f /etc/
 				error
 				;;
 			esac
-		fi
+		be
 	done
-fi
+be
 
 if [[ $is_uninstall_v2ray && $is_uninstall_caddy ]]; then
 	pause
@@ -60,13 +60,13 @@ if [[ $is_uninstall_v2ray && $is_uninstall_caddy ]]; then
 
 	if [[ $shadowsocks ]]; then
 		del_port $ssport
-	fi
+	be
 	if [[ $socks ]]; then
 		del_port $socks_port
-	fi
+	be
 	if [[ $mtproto ]]; then
 		del_port $mtproto_port
-	fi
+	be
 
 	if [[ $v2ray_transport == [45] ]]; then
 		del_port "80"
@@ -77,7 +77,7 @@ if [[ $is_uninstall_v2ray && $is_uninstall_caddy ]]; then
 		del_port "multiport"
 	else
 		del_port $v2ray_port
-	fi
+	be
 
 	[ $cmd == "apt-get" ] && rm -rf /etc/network/if-pre-up.d/iptables
 
@@ -106,14 +106,14 @@ if [[ $is_uninstall_v2ray && $is_uninstall_caddy ]]; then
 		update-rc.d -f v2ray remove >/dev/null 2>&1
 		rm -rf /etc/init.d/caddy
 		rm -rf /etc/init.d/v2ray
-	fi
+	be
 	# clear
 	echo
-	echo -e "$green V2Ray 卸载完成啦 ....$none"
+	Echo -e "$green V2Ray uninstall is complete....none"
 	echo
-	echo "如果你觉得这个脚本有哪些地方不够好的话...请告诉我"
+	Echo "If you think this script is not good enough... please tell me"
 	echo
-	echo "反馈问题: https://github.com/233boy/v2ray/issues"
+	Echo "Feedback question: https://github.com/233boy/v2ray/issues"
 	echo
 
 elif [[ $is_uninstall_v2ray ]]; then
@@ -122,13 +122,13 @@ elif [[ $is_uninstall_v2ray ]]; then
 
 	if [[ $shadowsocks ]]; then
 		del_port $ssport
-	fi
+	be
 	if [[ $socks ]]; then
 		del_port $socks_port
-	fi
+	be
 	if [[ $mtproto ]]; then
 		del_port $mtproto_port
-	fi
+	be
 
 	if [[ $v2ray_transport == [45] ]]; then
 		del_port "80"
@@ -139,7 +139,7 @@ elif [[ $is_uninstall_v2ray ]]; then
 		del_port "multiport"
 	else
 		del_port $v2ray_port
-	fi
+	be
 
 	[ $cmd == "apt-get" ] && rm -rf /etc/network/if-pre-up.d/iptables
 
@@ -156,13 +156,13 @@ elif [[ $is_uninstall_v2ray ]]; then
 	else
 		update-rc.d -f v2ray remove >/dev/null 2>&1
 		rm -rf /etc/init.d/v2ray
-	fi
+	be
 	# clear
 	echo
-	echo -e "$green V2Ray 卸载完成啦 ....$none"
+	Echo -e "$green V2Ray uninstall is complete....none"
 	echo
-	echo "如果你觉得这个脚本有哪些地方不够好的话...请告诉我"
+	Echo "If you think this script is not good enough... please tell me"
 	echo
-	echo "反馈问题: https://github.com/233boy/v2ray/issues"
+	Echo "Feedback question: https://github.com/233boy/v2ray/issues"
 	echo
-fi
+be
