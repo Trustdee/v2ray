@@ -3,12 +3,12 @@
 red='\e[91m'
 green='\e[92m'
 yellow='\e[93m'
-magenta='\e[95m'
+magenta = '\ e [95m'
 cyan='\e[96m'
 none='\e[0m'
 
 # Root
-[[ $(id -u) != 0 ]] && echo -e " 哎呀……请使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}" && exit 1
+[[ $(id -u) != 0 ]] && echo -e " Oops... Please use ${red}root ${none}user to run ${yellow}~(^_^) ${none}" && Exit 1
 
 _version="v3.09"
 
@@ -21,14 +21,14 @@ if [[ $sys_bit == "i386" || $sys_bit == "i686" ]]; then
 elif [[ $sys_bit == "x86_64" ]]; then
 	v2ray_bit="64"
 else
-	echo -e " 哈哈……这个 ${red}辣鸡脚本${none} 不支持你的系统。 ${yellow}(-_-) ${none}" && exit 1
-fi
+	Echo -e " Haha... This ${red} spicy chicken script ${none} does not support your system. ${yellow}(-_-) ${none}" && exit 1
+be
 
 if [[ -f /usr/bin/yum ]]; then
 
 	cmd="yum"
 
-fi
+be
 
 backup="/etc/v2ray/233blog_v2ray_backup.conf"
 
@@ -41,19 +41,19 @@ elif [[ -f /usr/bin/v2ray/v2ray && -f /etc/v2ray/config.json ]] && [[ -f /etc/v2
 	. /etc/v2ray/233boy/v2ray/tools/v1xx_to_v3xx.sh
 
 else
-	echo -e " 哎呀哎呀…… ${red}出错咯...请重新安装V2Ray${none} ${yellow}~(^_^) ${none}" && exit 1
-fi
+	Echo -e " Oh, oh yeah... ${red} error... please reinstall V2Ray${none} ${yellow}~(^_^) ${none}" && exit 1
+be
 
 if [[ $mark != "v3" ]]; then
 	. /etc/v2ray/233boy/v2ray/tools/v3.sh
-fi
+be
 if [[ $v2ray_transport -ge 18 ]]; then
 	dynamicPort=true
 	port_range="${v2ray_dynamicPort_start}-${v2ray_dynamicPort_end}"
-fi
+be
 if [[ $path_status ]]; then
 	is_path=true
-fi
+be
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
 old_id="e55c8d17-2cf3-b21a-bcf1-eeacb011ed79"
@@ -69,23 +69,23 @@ systemd=true
 
 if [[ $v2ray_ver != v* ]]; then
 	v2ray_ver="v$v2ray_ver"
-fi
+be
 if [[ ! -f $_v2ray_sh ]]; then
 	mv -f /usr/local/bin/v2ray $_v2ray_sh
 	chmod +x $_v2ray_sh
-	echo -e "\n $yellow 警告: 请重新登录 SSH 以避免出现 v2ray 命令未找到的情况。$none  \n" && exit 1
-fi
+	Echo -e "\n $yellow Warning: Please log back in to SSH to avoid the v2ray command not found. $none \n" && exit 1
+be
 
 if [ $v2ray_pid ]; then
-	v2ray_status="$green正在运行$none"
+	V2ray_status="$green is running $none"
 else
-	v2ray_status="$red未在运行$none"
-fi
+	V2ray_status="$red is not running $none"
+be
 if [[ $v2ray_transport == [45] && $caddy ]] && [[ $caddy_pid ]]; then
-	caddy_run_status="$green正在运行$none"
+	Caddy_run_status="$green is running $none"
 else
-	caddy_run_status="$red未在运行$none"
-fi
+	Caddy_run_status="$red is not running $none"
+be
 
 _load transport.sh
 ciphers=(
@@ -139,7 +139,7 @@ create_vmess_URL_config() {
 			"tls": ""
 		}
 		EOF
-	fi
+	be
 }
 view_v2ray_config_info() {
 
@@ -152,11 +152,11 @@ get_shadowsocks_config() {
 
 		while :; do
 			echo
-			echo -e "$yellow 1. $none查看 Shadowsocks 配置信息"
+			Echo -e "$yellow 1. $noneView Shadowsocks configuration information"
 			echo
-			echo -e "$yellow 2. $none生成二维码链接"
+			Echo -e "$yellow 2. $none generates QR code link"
 			echo
-			read -p "$(echo -e "请选择 [${magenta}1-2$none]:")" _opt
+			Read -p "$(echo -e "Please select [${magenta}1-2$none]:")" _opt
 			if [[ -z $_opt ]]; then
 				error
 			else
@@ -173,19 +173,19 @@ get_shadowsocks_config() {
 					error
 					;;
 				esac
-			fi
+			be
 
 		done
 	else
 		shadowsocks_config
-	fi
+	be
 }
 view_shadowsocks_config_info() {
 	if [[ $shadowsocks ]]; then
 		_load ss-info.sh
 	else
 		shadowsocks_config
-	fi
+	be
 }
 get_shadowsocks_config_qr_link() {
 	if [[ $shadowsocks ]]; then
@@ -194,14 +194,14 @@ get_shadowsocks_config_qr_link() {
 		_ss_qr
 	else
 		shadowsocks_config
-	fi
+	be
 
 }
 
 get_shadowsocks_config_qr_ask() {
 	echo
 	while :; do
-		echo -e "是否需要生成$yellow Shadowsocks 配置信息 $none二维码链接 [${magenta}Y/N$none]"
+		Echo -e "Do you need to generate $yellow Shadowsocks configuration information $none QR code link [${magenta}Y/N$none]"
 		read -p "$(echo -e "默认 [${magenta}N$none]:")" y_n
 		[ -z $y_n ] && y_n="n"
 		if [[ $y_n == [Yy] ]]; then
@@ -211,7 +211,7 @@ get_shadowsocks_config_qr_ask() {
 			break
 		else
 			error
-		fi
+		be
 	done
 
 }
@@ -220,15 +220,15 @@ change_shadowsocks_config() {
 
 		while :; do
 			echo
-			echo -e "$yellow 1. $none修改 Shadowsocks 端口"
+			Echo -e "$yellow 1. $none to modify the Shadowsocks port"
 			echo
-			echo -e "$yellow 2. $none修改 Shadowsocks 密码"
+			Echo -e "$yellow 2. $none to modify the Shadowsocks password"
 			echo
-			echo -e "$yellow 3. $none修改 Shadowsocks 加密协议"
+			Echo -e "$yellow 3. $none to modify the Shadowsocks encryption protocol"
 			echo
 			echo -e "$yellow 4. $none关闭 Shadowsocks"
 			echo
-			read -p "$(echo -e "请选择 [${magenta}1-4$none]:")" _opt
+			Read -p "$(echo -e "Please select [${magenta}1-4$none]:")" _opt
 			if [[ -z $_opt ]]; then
 				error
 			else
@@ -253,23 +253,23 @@ change_shadowsocks_config() {
 					error
 					;;
 				esac
-			fi
+			be
 
 		done
 	else
 
 		shadowsocks_config
-	fi
+	be
 }
 shadowsocks_config() {
 	echo
 	echo
-	echo -e " $red大佬...你没有配置 Shadowsocks $none...不过现在想要配置的话也是可以的 ^_^"
+	Echo -e " $red big... you didn't configure Shadowsocks $none... but now you can configure it ^_^"
 	echo
 	echo
 
 	while :; do
-		echo -e "是否配置 ${yellow}Shadowsocks${none} [${magenta}Y/N$none]"
+		Echo -e "Do you configure ${yellow}Shadowsocks${none} [${magenta}Y/N$none]"
 		read -p "$(echo -e "(默认 [${cyan}N$none]):") " install_shadowsocks
 		[[ -z "$install_shadowsocks" ]] && install_shadowsocks="n"
 		if [[ "$install_shadowsocks" == [Yy] ]]; then
@@ -291,54 +291,54 @@ shadowsocks_config() {
 			break
 		elif [[ "$install_shadowsocks" == [Nn] ]]; then
 			echo
-			echo -e " $green已取消配置 Shadowsocks ....$none"
+			Echo -e " $green has unconfigured Shadowsocks ....$none"
 			echo
 			break
 		else
 			error
-		fi
+		be
 
 	done
 }
 shadowsocks_port_config() {
 	local random=$(shuf -i20001-65535 -n1)
 	while :; do
-		echo -e "请输入 "$yellow"Shadowsocks"$none" 端口 ["$magenta"1-65535"$none"]，不能和 "$yellow"V2ray"$none" 端口相同"
-		read -p "$(echo -e "(默认端口: ${cyan}${random}$none):") " new_ssport
+		Echo -e "Please enter "$yellow"Shadowsocks"$none" port["$magenta"1-65535"$none"], not the same as "$yellow"V2ray"$none" port"
+		Read -p "$(echo -e " (default port: ${cyan}${random}$none):") " new_ssport
 		[ -z "$new_ssport" ] && new_ssport=$random
 		case $new_ssport in
 		$v2ray_port)
 			echo
-			echo -e " 不能和$cyan V2Ray 端口 $none一毛一样...."
+			Echo -e " can't be the same as $cyan V2Ray port $none...."
 			echo
-			echo -e " 当前 V2Ray 端口：${cyan}$v2ray_port${none}"
+			Echo -e " current V2Ray port: ${cyan}$v2ray_port${none}"
 			error
 			;;
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 			if [[ $v2ray_transport == [45] ]]; then
 				local tls=ture
-			fi
+			be
 			if [[ $tls && $new_ssport == "80" ]] || [[ $tls && $new_ssport == "443" ]]; then
 				echo
-				echo -e "由于你当前已使用了 "$green"WebSocket + TLS $none或$green HTTP/2"$none" 传输协议."
+				Echo -e "Because you are currently using "$green" WebSocket + TLS $none or $green HTTP/2"$none" transport protocol."
 				echo
-				echo -e "所以不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+				Echo -e "so you can't select "$magenta"80"$none" or "$magenta"443"$none" port"
 				error
 			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $new_ssport || $v2ray_dynamicPort_end == $new_ssport ]]; then
 				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+				Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 				error
 			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_ssport && $new_ssport -le $v2ray_dynamicPort_end ]]; then
 				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+				Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 				error
 			elif [[ $socks && $new_ssport == $socks_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [[ $mtproto && $new_ssport == $mtproto_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 MTProto 端口冲突...当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e "Sorry, this port conflicts with the MTProto port...current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
@@ -347,7 +347,7 @@ shadowsocks_port_config() {
 				echo "----------------------------------------------------------------"
 				echo
 				break
-			fi
+			be
 			;;
 		*)
 			error
@@ -361,13 +361,13 @@ shadowsocks_port_config() {
 shadowsocks_password_config() {
 
 	while :; do
-		echo -e "请输入 "$yellow"Shadowsocks"$none" 密码"
-		read -p "$(echo -e "(默认密码: ${cyan}233blog.com$none)"): " new_sspass
+		Echo -e "Please enter "$yellow"Shadowsocks"$none" password"
+		Read -p "$(echo -e " (default password: ${cyan}233blog.com$none)"): " new_sspass
 		[ -z "$new_sspass" ] && new_sspass="233blog.com"
 		case $new_sspass in
 		*[/$]*)
 			echo
-			echo -e " 由于这个脚本太辣鸡了..所以密码不能包含$red / $none或$red $ $none这两个符号.... "
+			Echo -e " Since this script is too spicy chicken.. so the password can not contain $red / $none or $red $ $none these two symbols...."
 			echo
 			error
 			;;
@@ -388,21 +388,21 @@ shadowsocks_password_config() {
 shadowsocks_ciphers_config() {
 
 	while :; do
-		echo -e "请选择 "$yellow"Shadowsocks"$none" 加密协议 [${magenta}1-7$none]"
+		Echo -e "Please select "$yellow"Shadowsocks"$none" encryption protocol [${magenta}1-7$none]"
 		for ((i = 1; i <= ${#ciphers[*]}; i++)); do
 			ciphers_show="${ciphers[$i - 1]}"
 			echo
 			echo -e "$yellow $i. $none${ciphers_show}"
 		done
 		echo
-		read -p "$(echo -e "(默认加密协议: ${cyan}${ciphers[6]}$none)"):" ssciphers_opt
+		Read -p "$(echo -e " (default encryption protocol: ${cyan}${ciphers[6]}$none)"):" ssciphers_opt
 		[ -z "$ssciphers_opt" ] && ssciphers_opt=7
 		case $ssciphers_opt in
 		[1-7])
 			new_ssciphers=${ciphers[$ssciphers_opt - 1]}
 			echo
 			echo
-			echo -e "$yellow Shadowsocks 加密协议 = $cyan${new_ssciphers}$none"
+			Echo -e "$yellow Shadowsocks Encryption Protocol = $cyan${new_ssciphers}$none"
 			echo "----------------------------------------------------------------"
 			echo
 			break
@@ -419,44 +419,44 @@ change_shadowsocks_port() {
 	echo
 	while :; do
 		echo -e "请输入 "$yellow"Shadowsocks"$none" 端口 ["$magenta"1-65535"$none"]"
-		read -p "$(echo -e "(当前端口: ${cyan}$ssport$none):") " new_ssport
+		Read -p "$(echo -e "(current port: ${cyan}$ssport$none):") " new_ssport
 		[ -z "$new_ssport" ] && error && continue
 		case $new_ssport in
 		$ssport)
 			echo
-			echo " 跟当前端口一毛一样....修改个鸡鸡哦"
+			Echo " Same as the current port....modify a chicken"
 			error
 			;;
 		$v2ray_port)
 			echo
-			echo -e " 不能和$cyan V2Ray 端口 $none一毛一样...."
+			Echo -e " can't be the same as $cyan V2Ray port $none...."
 			error
 			;;
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 			if [[ $v2ray_transport == [45] ]]; then
 				local tls=ture
-			fi
+			be
 			if [[ $tls && $new_ssport == "80" ]] || [[ $tls && $new_ssport == "443" ]]; then
 				echo
-				echo -e "由于你已选择了 "$green"WebSocket + TLS $none或$green HTTP/2"$none" 传输协议."
+				Echo -e "Because you have chosen "$green"WebSocket + TLS $none or $green HTTP/2"$none" transport protocol."
 				echo
-				echo -e "所以不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+				Echo -e "so you can't select "$magenta"80"$none" or "$magenta"443"$none" port"
 				error
 			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $new_ssport || $v2ray_dynamicPort_end == $new_ssport ]]; then
 				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+				Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 				error
 			elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $new_ssport && $new_ssport -le $v2ray_dynamicPort_end ]]; then
 				echo
-				echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+				Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 				error
 			elif [[ $socks && $new_ssport == $socks_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [[ $mtproto && $new_ssport == $mtproto_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 MTProto 端口冲突...当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e "Sorry, this port conflicts with the MTProto port...current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
@@ -474,7 +474,7 @@ change_shadowsocks_port() {
 				view_shadowsocks_config_info
 				# get_shadowsocks_config_qr_ask
 				break
-			fi
+			be
 			;;
 		*)
 			error
@@ -486,18 +486,18 @@ change_shadowsocks_port() {
 change_shadowsocks_password() {
 	echo
 	while :; do
-		echo -e "请输入 "$yellow"Shadowsocks"$none" 密码"
-		read -p "$(echo -e "(当前密码：${cyan}$sspass$none)"): " new_sspass
+		Echo -e "Please enter "$yellow"Shadowsocks"$none" password"
+		Read -p "$(echo -e "(current password: ${cyan}$sspass$none)"): " new_sspass
 		[ -z "$new_sspass" ] && error && continue
 		case $new_sspass in
 		$sspass)
 			echo
-			echo " 跟当前密码一毛一样....修改个鸡鸡哦"
+			Echo " Same as the current password....modify a chicken"
 			error
 			;;
 		*[/$]*)
 			echo
-			echo -e " 由于这个脚本太辣鸡了..所以密码不能包含$red / $none或$red $ $none这两个符号.... "
+			Echo -e " Since this script is too spicy chicken.. so the password can not contain $red / $none or $red $ $none these two symbols...."
 			echo
 			error
 			;;
@@ -525,26 +525,26 @@ change_shadowsocks_password() {
 change_shadowsocks_ciphers() {
 	echo
 	while :; do
-		echo -e "请选择 "$yellow"Shadowsocks"$none" 加密协议 [${magenta}1-${#ciphers[*]}$none]"
+		Echo -e "Please select "$yellow"Shadowsocks"$none" encryption protocol [${magenta}1-${#ciphers[*]}$none]"
 		for ((i = 1; i <= ${#ciphers[*]}; i++)); do
 			ciphers_show="${ciphers[$i - 1]}"
 			echo
 			echo -e "$yellow $i. $none${ciphers_show}"
 		done
 		echo
-		read -p "$(echo -e "(当前加密协议: ${cyan}${ssciphers}$none)"):" ssciphers_opt
+		Read -p "$(echo -e "(current encryption protocol: ${cyan}${ssciphers}$none)"):" ssciphers_opt
 		[ -z "$ssciphers_opt" ] && error && continue
 		case $ssciphers_opt in
 		[1-7])
 			new_ssciphers=${ciphers[$ssciphers_opt - 1]}
 			if [[ $new_ssciphers == $ssciphers ]]; then
 				echo
-				echo " 跟当前加密协议一毛一样....修改个鸡鸡哦"
+				Echo " Same as the current encryption protocol....modify a chicken"
 				error && continue
-			fi
+			be
 			echo
 			echo
-			echo -e "$yellow Shadowsocks 加密协议 = $cyan${new_ssciphers}$none"
+			Echo -e "$yellow Shadowsocks Encryption Protocol = $cyan${new_ssciphers}$none"
 			echo "----------------------------------------------------------------"
 			echo
 			pause
@@ -568,13 +568,13 @@ disable_shadowsocks() {
 	echo
 
 	while :; do
-		echo -e "是否关闭 ${yellow}Shadowsocks${none} [${magenta}Y/N$none]"
+		Echo -e "Do you want to close ${yellow}Shadowsocks${none} [${magenta}Y/N$none]"
 		read -p "$(echo -e "(默认 [${cyan}N$none]):") " y_n
 		[[ -z "$y_n" ]] && y_n="n"
 		if [[ "$y_n" == [Yy] ]]; then
 			echo
 			echo
-			echo -e "$yellow 关闭 Shadowsocks = $cyan是$none"
+			Echo -e "$yellow close Shadowsocks = $cyan is $none"
 			echo "----------------------------------------------------------------"
 			echo
 			pause
@@ -586,31 +586,31 @@ disable_shadowsocks() {
 			echo
 			echo
 			echo
-			echo -e "$green Shadowsocks 已关闭...不过你也可以随时重新启用 Shadowsocks ...只要你喜欢$none"
+			Echo -e "$green Shadowsocks is off...but you can always re-enable Shadowsocks...as long as you like $none"
 			echo
 			break
 		elif [[ "$y_n" == [Nn] ]]; then
 			echo
-			echo -e " $green已取消关闭 Shadowsocks ....$none"
+			Echo -e " $green has canceled closing Shadowsocks ....$none"
 			echo
 			break
 		else
 			error
-		fi
+		be
 
 	done
 }
 change_v2ray_config() {
 	local _menu=(
-		"修改 V2Ray 端口"
-		"修改 V2Ray 传输协议"
-		"修改 V2Ray 动态端口 (如果可以)"
-		"修改 用户ID ( UUID )"
-		"修改 TLS 域名 (如果可以)"
-		"修改 分流的路径 (如果可以)"
-		"修改 伪装的网址 (如果可以)"
-		"关闭 网站伪装 和 路径分流 (如果可以)"
-		"开启 / 关闭 广告拦截"
+		"Modify V2Ray Port"
+		"Modify V2Ray Transport Protocol"
+		"Modify V2Ray Dynamic Port (if available)"
+		"Modify User ID (UUID)"
+		"Modify TLS domain name (if available)"
+		"Modify the path of the split (if possible)"
+		"Modify the spoofed URL (if available)"
+		"Close site masquerading and path shunting (if available)"
+		"Turn on/off ad blocking"
 	)
 	while :; do
 		for ((i = 1; i <= ${#_menu[*]}; i++)); do
@@ -620,10 +620,10 @@ change_v2ray_config() {
 			else
 				echo
 				echo -e "$yellow $i. $none${_menu[$i - 1]}"
-			fi
+			be
 		done
 		echo
-		read -p "$(echo -e "请选择 [${magenta}1-${#_menu[*]}$none]:")" _opt
+		Read -p "$(echo -e "Please select [${magenta}1-${#_menu[*]}$none]:")" _opt
 		if [[ -z $_opt ]]; then
 			error
 		else
@@ -676,56 +676,56 @@ change_v2ray_config() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 change_v2ray_port() {
 	if [[ $v2ray_transport == 4 ]]; then
 		echo
-		echo -e " 由于你目前使用的是$yellow WebSocket + TLS $none传输协议...所以修不修改 V2Ray 端口没有什么不一样的"
+		Echo -e " Since you are currently using the $yellow WebSocket + TLS $none transport protocol... there is nothing wrong with repairing the V2Ray port."
 		echo
-		echo " 如果你想要使用其他端口...可以先修改 V2Ray 的传输协议..之后再修改 V2Ray 端口"
+		Echo " If you want to use a different port... you can modify the V2Ray transport protocol first.. then modify the V2Ray port"
 		echo
 		change_v2ray_transport_ask
 	elif [[ $v2ray_transport == 5 ]]; then
 		echo
-		echo -e " 由于你目前使用的是$yellow HTTP/2 $none传输协议...所以修不修改 V2Ray 端口没有什么不一样的"
+		Echo -e " Since you are currently using the $yellow HTTP/2 $none transport protocol... there is nothing wrong with repairing the V2Ray port."
 		echo
-		echo " 如果你想要使用其他端口...可以先修改 V2Ray 的传输协议..之后再修改 V2Ray 端口"
+		Echo " If you want to use a different port... you can modify the V2Ray transport protocol first.. then modify the V2Ray port"
 		echo
 		change_v2ray_transport_ask
 	else
 		echo
 		while :; do
-			echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]"
-			read -p "$(echo -e "(当前端口: ${cyan}${v2ray_port}$none):")" v2ray_port_opt
+			Echo -e "Please enter "$yellow"V2Ray"$none" port["$magenta"1-65535"$none"]"
+			Read -p "$(echo -e "(current port: ${cyan}${v2ray_port}$none):")" v2ray_port_opt
 			[[ -z $v2ray_port_opt ]] && error && continue
 			case $v2ray_port_opt in
 			$v2ray_port)
 				echo
-				echo " 哎呀...跟当前端口一毛一样呀...修改个鸡鸡哦"
+				Echo "Oh... it’s the same as the current port...modify a chicken"
 				error
 				;;
 			[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 				if [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start == $v2ray_port_opt || $v2ray_dynamicPort_end == $v2ray_port_opt ]]; then
 					echo
-					echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+					Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 					error
 				elif [[ $dynamicPort ]] && [[ $v2ray_dynamicPort_start -lt $v2ray_port_opt && $v2ray_port_opt -le $v2ray_dynamicPort_end ]]; then
 					echo
-					echo -e " 抱歉，此端口和 V2Ray 动态端口 冲突，当前 V2Ray 动态端口范围为：${cyan}$port_range${none}"
+					Echo -e " Sorry, this port conflicts with the V2Ray dynamic port. The current V2Ray dynamic port range is: ${cyan}$port_range${none}"
 					error
 				elif [[ $shadowsocks && $v2ray_port_opt == $ssport ]]; then
 					echo
-					echo -e "抱歉, 此端口跟 Shadowsocks 端口冲突...当前 Shadowsocks 端口: ${cyan}$ssport$none"
+					Echo -e "Sorry, this port conflicts with the Shadowsocks port...current Shadowsocks port: ${cyan}$ssport$none"
 					error
 				elif [[ $socks && $v2ray_port_opt == $socks_port ]]; then
 					echo
-					echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+					Echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 					error
 				elif [[ $mtproto && $v2ray_port_opt == $mtproto_port ]]; then
 					echo
-					echo -e "抱歉, 此端口跟 MTProto 端口冲突...当前 MTProto 端口: ${cyan}$mtproto_port$none"
+					Echo -e "Sorry, this port conflicts with the MTProto port...current MTProto port: ${cyan}$mtproto_port$none"
 					error
 				else
 					echo
@@ -743,7 +743,7 @@ change_v2ray_port() {
 					view_v2ray_config_info
 					# download_v2ray_config_ask
 					break
-				fi
+				be
 				;;
 			*)
 				error
@@ -751,13 +751,13 @@ change_v2ray_port() {
 			esac
 
 		done
-	fi
+	be
 
 }
 download_v2ray_config_ask() {
 	echo
 	while :; do
-		echo -e "是否需要 下载 V2Ray 配置 / 生成配置信息链接 / 生成二维码链接 [${magenta}Y/N$none]"
+		Echo -e "Do you need to download V2Ray configuration / generate configuration information link / generate QR code link [${magenta}Y/N$none]"
 		read -p "$(echo -e "默认 [${cyan}N$none]:")" y_n
 		[ -z $y_n ] && y_n="n"
 		if [[ $y_n == [Yy] ]]; then
@@ -767,14 +767,14 @@ download_v2ray_config_ask() {
 			break
 		else
 			error
-		fi
+		be
 	done
 
 }
 change_v2ray_transport_ask() {
 	echo
 	while :; do
-		echo -e "是否需要修改$yellow V2Ray $none传输协议 [${magenta}Y/N$none]"
+		Echo -e "Do you need to modify the $yellow V2Ray $none transport protocol [${magenta}Y/N$none]"
 		read -p "$(echo -e "默认 [${cyan}N$none]:")" y_n
 		[ -z $y_n ] && break
 		if [[ $y_n == [Yy] ]]; then
@@ -784,13 +784,13 @@ change_v2ray_transport_ask() {
 			break
 		else
 			error
-		fi
+		be
 	done
 }
 change_v2ray_transport() {
 	echo
 	while :; do
-		echo -e "请选择 "$yellow"V2Ray"$none" 传输协议 [${magenta}1-${#transport[*]}$none]"
+		Echo -e "Please select "$yellow"V2Ray"$none" transport protocol [${magenta}1-${#transport[*]}$none]"
 		echo
 		for ((i = 1; i <= ${#transport[*]}; i++)); do
 			Stream="${transport[$i - 1]}"
@@ -800,60 +800,60 @@ change_v2ray_transport() {
 			else
 				# echo
 				echo -e "$yellow $i. $none${Stream}"
-			fi
+			be
 		done
 		echo
-		echo "备注1: 含有 [dynamicPort] 的即启用动态端口.."
-		echo "备注2: [utp | srtp | wechat-video | dtls | wireguard] 分别伪装成 [BT下载 | 视频通话 | 微信视频通话 | DTLS 1.2 数据包 | WireGuard 数据包]"
+		Echo "Note 1: Dynamic port is enabled with [dynamicPort]."
+		Echo "Note 2: [utp | srtp | wechat-video | dtls | wireguard] disguised as [BT Download | Video Call | WeChat Video Call | DTLS 1.2 Packet | WireGuard Packet]
 		echo
-		read -p "$(echo -e "(当前传输协议: ${cyan}${transport[$v2ray_transport - 1]}$none)"):" v2ray_transport_opt
+		Read -p "$(echo -e "(current transfer protocol: ${cyan}${transport[$v2ray_transport - 1]}$none)"):" v2ray_transport_opt
 		if [ -z "$v2ray_transport_opt" ]; then
 			error
 		else
 			case $v2ray_transport_opt in
 			$v2ray_transport)
 				echo
-				echo " 哎呀...跟当前传输协议一毛一样呀...修改个鸡鸡哦"
+				Echo "Oh... it’s the same as the current transfer protocol...modify a chicken"
 				error
 				;;
 			4 | 5)
 				if [[ $v2ray_port == "80" || $v2ray_port == "443" ]]; then
 					echo
-					echo -e " 抱歉...如果你想要使用${cyan} ${transport[$v2ray_transport_opt - 1]} $none传输协议.. ${red}V2Ray 端口不能为 80 或者 443 ...$none"
+					Echo -e " Sorry... if you want to use ${cyan} ${transport[$v2ray_transport_opt - 1]} $none transport protocol: ${red}V2Ray port cannot be 80 or 443 ... $none"
 					echo
-					echo -e " 当前 V2Ray 端口: ${cyan}$v2ray_port$none"
+					Echo -e " current V2Ray port: ${cyan}$v2ray_port$none"
 					error
 				elif [[ $shadowsocks ]] && [[ $ssport == "80" || $ssport == "443" ]]; then
 					echo
-					echo -e " 抱歉...如果你想要使用${cyan} ${transport[$v2ray_transport_opt - 1]} $none传输协议.. ${red}Shadowsocks 端口不能为 80 或者 443 ...$none"
+					Echo -e " Sorry... if you want to use ${cyan} ${transport[$v2ray_transport_opt - 1]} $none transport protocol: ${red}Shadowsocks port cannot be 80 or 443 ... $none"
 					echo
-					echo -e " 当前 Shadowsocks 端口: ${cyan}$ssport$none"
+					Echo -e " Current Shadowsocks port: ${cyan}$ssport$none"
 					error
 				elif [[ $socks ]] && [[ $socks_port == "80" || $socks_port == "443" ]]; then
 					echo
-					echo -e " 抱歉...如果你想要使用${cyan} ${transport[$v2ray_transport_opt - 1]} $none传输协议.. ${red}Socks 端口不能为 80 或者 443 ...$none"
+					Echo -e " Sorry... if you want to use ${cyan} ${transport[$v2ray_transport_opt - 1]} $none transport protocol: ${red}Socks port cannot be 80 or 443 ... $none"
 					echo
-					echo -e " 当前 Socks 端口: ${cyan}$socks_port$none"
+					Echo -e " current Socks port: ${cyan}$socks_port$none"
 					error
 				elif [[ $mtproto ]] && [[ $mtproto_port == "80" || $mtproto_port == "443" ]]; then
 					echo
-					echo -e " 抱歉...如果你想要使用${cyan} ${transport[$v2ray_transport_opt - 1]} $none传输协议.. ${red}MTProto 端口不能为 80 或者 443 ...$none"
+					Echo -e " Sorry... if you want to use ${cyan} ${transport[$v2ray_transport_opt - 1]} $none transport protocol: ${red}MTProto port cannot be 80 or 443 ... $none"
 					echo
-					echo -e " 当前 MTProto 端口: ${cyan}$mtproto_port$none"
+					Echo -e " Current MTProto port: ${cyan}$mtproto_port$none"
 					error
 				else
 					echo
 					echo
-					echo -e "$yellow V2Ray 传输协议 = $cyan${transport[$v2ray_transport_opt - 1]}$none"
+					Echo -e "$yellow V2Ray transport protocol = $cyan${transport[$v2ray_transport_opt - 1]}$none"
 					echo "----------------------------------------------------------------"
 					echo
 					break
-				fi
+				be
 				;;
 			[1-9] | [1-2][0-9] | 3[0-2])
 				echo
 				echo
-				echo -e "$yellow V2Ray 传输协议 = $cyan${transport[$v2ray_transport_opt - 1]}$none"
+				Echo -e "$yellow V2Ray transport protocol = $cyan${transport[$v2ray_transport_opt - 1]}$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
@@ -862,7 +862,7 @@ change_v2ray_transport() {
 				error
 				;;
 			esac
-		fi
+		be
 
 	done
 	pause
@@ -890,7 +890,7 @@ change_v2ray_transport() {
 		clear
 		view_v2ray_config_info
 		# download_v2ray_config_ask
-	fi
+	be
 
 }
 old_transport() {
@@ -903,20 +903,20 @@ old_transport() {
 				systemctl disable caddy >/dev/null 2>&1
 			else
 				update-rc.d -f caddy remove >/dev/null 2>&1
-			fi
+			be
 		elif [[ $caddy ]]; then
 			if [[ $systemd ]]; then
 				systemctl disable caddy >/dev/null 2>&1
 			else
 				update-rc.d -f caddy remove >/dev/null 2>&1
-			fi
-		fi
+			be
+		be
 		if [[ $is_path ]]; then
 			backup_config -path
-		fi
+		be
 	elif [[ $v2ray_transport -ge 18 ]]; then
 		del_port "multiport"
-	fi
+	be
 }
 
 tls_config() {
@@ -924,29 +924,29 @@ tls_config() {
 		echo
 		echo
 		echo
-		echo -e "请输入一个 $magenta正确的域名$none，一定一定一定要正确，不！能！出！错！"
-		read -p "(例如：233blog.com): " new_domain
+		Echo -e "Please enter a $magenta correct domain name $none, be sure to be correct, no! Yes! Out! Wrong!"
+		Read -p "(example: 233blog.com): " new_domain
 		[ -z "$new_domain" ] && error && continue
 		echo
 		echo
-		echo -e "$yellow 你的域名 = $cyan$new_domain$none"
+		Echo -e "$yellow your domain name = $cyan$new_domain$none"
 		echo "----------------------------------------------------------------"
 		break
 	done
 	get_ip
 	echo
 	echo
-	echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+	Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 	echo
-	echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+	Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 	echo
-	echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+	Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 	echo "----------------------------------------------------------------"
 	echo
 
 	while :; do
 
-		read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") " record
+		Read -p "$(echo -e " (if it has been parsed correctly: [${magenta}Y$none]):") " record
 		if [[ -z "$record" ]]; then
 			error
 		else
@@ -954,14 +954,14 @@ tls_config() {
 				domain_check
 				echo
 				echo
-				echo -e "$yellow 域名解析 = ${cyan}我确定已经有解析了$none"
+				Echo -e "$yellow domain name resolution = ${cyan} I'm sure I have parsed $none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
 			else
 				error
-			fi
-		fi
+			be
+		be
 
 	done
 
@@ -975,11 +975,11 @@ tls_config() {
 			path=$new_path
 			proxy_site=$new_proxy_site
 			is_path=true
-		fi
+		be
 
 		if [[ $v2ray_transport -ge 18 ]]; then
 			del_port "multiport"
-		fi
+		be
 		domain=$new_domain
 
 		open_port "80"
@@ -988,7 +988,7 @@ tls_config() {
 			systemctl enable caddy >/dev/null 2>&1
 		else
 			update-rc.d -f caddy defaults >/dev/null 2>&1
-		fi
+		be
 		v2ray_transport=$v2ray_transport_opt
 		caddy_config
 		config
@@ -1006,10 +1006,10 @@ tls_config() {
 				path=$new_path
 				proxy_site=$new_proxy_site
 				is_path=true
-			fi
+			be
 			if [[ $v2ray_transport -ge 18 ]]; then
 				del_port "multiport"
-			fi
+			be
 			domain=$new_domain
 			install_caddy
 			open_port "80"
@@ -1023,34 +1023,34 @@ tls_config() {
 			# download_v2ray_config_ask
 		else
 			auto_tls_config
-		fi
-	fi
+		be
+	be
 
 }
 auto_tls_config() {
 	echo -e "
 
-		安装 Caddy 来实现 自动配置 TLS
+		Install Caddy for automatic configuration of TLS
 		
-		如果你已经安装 Nginx 或 Caddy
+		If you already have Nginx or Caddy installed
 
-		$yellow并且..自己能搞定配置 TLS$none
+		$yellow and.. can get TLS$none by yourself
 
-		那么就不需要 打开自动配置 TLS
+		Then you don't need to turn on automatic configuration TLS
 		"
 	echo "----------------------------------------------------------------"
 	echo
 
 	while :; do
 
-		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}Y/N$none]):") " auto_install_caddy
+		Read -p "$(echo -e " (whether TLS is automatically configured: [${magenta}Y/N$none]):") " auto_install_caddy
 		if [[ -z "$auto_install_caddy" ]]; then
 			error
 		else
 			if [[ "$auto_install_caddy" == [Yy] ]]; then
 				echo
 				echo
-				echo -e "$yellow 自动配置 TLS = $cyan打开$none"
+				Echo -e "$yellow auto-configure TLS = $cyan open $none"
 				echo "----------------------------------------------------------------"
 				echo
 				path_config_ask
@@ -1062,10 +1062,10 @@ auto_tls_config() {
 					path=$new_path
 					proxy_site=$new_proxy_site
 					is_path=true
-				fi
+				be
 				if [[ $v2ray_transport -ge 18 ]]; then
 					del_port "multiport"
-				fi
+				be
 				domain=$new_domain
 				install_caddy
 				open_port "80"
@@ -1081,7 +1081,7 @@ auto_tls_config() {
 			elif [[ "$auto_install_caddy" == [Nn] ]]; then
 				echo
 				echo
-				echo -e "$yellow 自动配置 TLS = $cyan关闭$none"
+				Echo -e "$yellow automatically configures TLS = $cyan turns off $none"
 				echo "----------------------------------------------------------------"
 				echo
 				pause
@@ -1089,7 +1089,7 @@ auto_tls_config() {
 				backup_config v2ray_transport domain
 				if [[ $v2ray_transport -ge 18 ]]; then
 					del_port "multiport"
-				fi
+				be
 				domain=$new_domain
 				open_port "80"
 				open_port "443"
@@ -1101,8 +1101,8 @@ auto_tls_config() {
 				break
 			else
 				error
-			fi
-		fi
+			be
+		be
 
 	done
 }
@@ -1110,7 +1110,7 @@ auto_tls_config() {
 path_config_ask() {
 	echo
 	while :; do
-		echo -e "是否开启 网站伪装 和 路径分流 [${magenta}Y/N$none]"
+		Echo -e "Do you want to enable website spoofing and path shunting [${magenta}Y/N$none]"
 		read -p "$(echo -e "(默认: [${cyan}N$none]):")" path_ask
 		[[ -z $path_ask ]] && path_ask="n"
 
@@ -1122,7 +1122,7 @@ path_config_ask() {
 		N | n)
 			echo
 			echo
-			echo -e "$yellow 网站伪装 和 路径分流 = $cyan不想配置$none"
+			Echo -e "$yellow site masquerading and path shunting = $cyan don't want to configure $none"
 			echo "----------------------------------------------------------------"
 			echo
 			break
@@ -1136,21 +1136,21 @@ path_config_ask() {
 path_config() {
 	echo
 	while :; do
-		echo -e "请输入想要 ${magenta}用来分流的路径$none , 例如 /233blog , 那么只需要输入 233blog 即可"
+		Echo -e "Please enter the path $none you want ${magenta} to offload, for example /233blog, then just type 233blog."
 		read -p "$(echo -e "(默认: [${cyan}233blog$none]):")" new_path
 		[[ -z $new_path ]] && new_path="233blog"
 
 		case $new_path in
 		*[/$]*)
 			echo
-			echo -e " 由于这个脚本太辣鸡了..所以分流的路径不能包含$red / $none或$red $ $none这两个符号.... "
+			Echo -e " Since this script is too spicy chicken.. so the shunt path cannot contain $red / $none or $red $ $none...."
 			echo
 			error
 			;;
 		*)
 			echo
 			echo
-			echo -e "$yellow 分流的路径 = ${cyan}/${new_path}$none"
+			Echo -e "$yellow shunt path = ${cyan}/${new_path}$none"
 			echo "----------------------------------------------------------------"
 			echo
 			break
@@ -1162,25 +1162,25 @@ path_config() {
 proxy_site_config() {
 	echo
 	while :; do
-		echo -e "请输入 ${magenta}一个正确的$none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://liyafly.com"
-		echo -e "举例...假设你当前的域名是$green $domain $none, 伪装的网址的是 https://liyafly.com"
-		echo -e "然后打开你的域名时候...显示出来的内容就是来自 https://liyafly.com 的内容"
-		echo -e "其实就是一个反代...明白就好..."
-		echo -e "如果不能伪装成功...可以使用 v2ray config 修改伪装的网址"
+		Echo -e "Please enter ${magenta} with a correct $none ${cyan} URL $none used as a camouflage $none for the ${cyan} site, eg https://liyafly.com"
+		Echo -e "Example... Suppose your current domain name is $green $domain $none, the spoofed URL is https://liyafly.com"
+		Echo -e "When you open your domain name... the content displayed is the content from https://liyafly.com"
+		Echo -e "is actually an anti-generation...just understand..."
+		Echo -e "If you can't pretend to succeed... you can use v2ray config to modify the spoofed URL"
 		read -p "$(echo -e "(默认: [${cyan}https://liyafly.com$none]):")" new_proxy_site
 		[[ -z $new_proxy_site ]] && new_proxy_site="https://liyafly.com"
 
 		case $new_proxy_site in
 		*[#$]*)
 			echo
-			echo -e " 由于这个脚本太辣鸡了..所以伪装的网址不能包含$red # $none或$red $ $none这两个符号.... "
+			Echo -e " Since this script is too spicy chicken.. so the fake URL cannot contain $red # $none or $red $ $none...."
 			echo
 			error
 			;;
 		*)
 			echo
 			echo
-			echo -e "$yellow 伪装的网址 = ${cyan}${new_proxy_site}$none"
+			Echo -e "$yellow camouflaged URL = ${cyan}${new_proxy_site}$none"
 			echo "----------------------------------------------------------------"
 			echo
 			break
@@ -1205,38 +1205,38 @@ v2ray_dynamic_port_start() {
 	echo
 	echo
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray 动态端口开始 "$none"范围 ["$magenta"1-65535"$none"]"
-		read -p "$(echo -e "(默认开始端口: ${cyan}10000$none):")" v2ray_dynamic_port_start_input
+		Echo -e "Please enter "$yellow"V2Ray dynamic port to start "$none" range ["$magenta"1-65535"$none"]"
+		Read -p "$(echo -e " (default start port: ${cyan}10000$none):")" v2ray_dynamic_port_start_input
 		[ -z $v2ray_dynamic_port_start_input ] && v2ray_dynamic_port_start_input=10000
 		case $v2ray_dynamic_port_start_input in
 		$v2ray_port)
 			echo
-			echo " 不能和 V2Ray 端口一毛一样...."
+			Echo "Can't be the same as the V2Ray port...."
 			echo
-			echo -e " 当前 V2Ray 端口：${cyan}$v2ray_port${none}"
+			Echo -e " current V2Ray port: ${cyan}$v2ray_port${none}"
 			error
 			;;
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 			if [[ $shadowsocks && $v2ray_dynamic_port_start_input == $ssport ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Shadowsocks 端口冲突...当前 Shadowsocks 端口: ${cyan}$ssport$none"
+				Echo -e "Sorry, this port conflicts with the Shadowsocks port...current Shadowsocks port: ${cyan}$ssport$none"
 				error
 			elif [[ $socks && $v2ray_dynamic_port_start_input == $socks_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [[ $mtproto && $v2ray_dynamic_port_start_input == $mtproto_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 MTProto 端口冲突...当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e "Sorry, this port conflicts with the MTProto port...current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
 				echo
-				echo -e "$yellow V2Ray 动态端口开始 = $cyan$v2ray_dynamic_port_start_input$none"
+				Echo -e "$yellow V2Ray dynamic port start = $cyan$v2ray_dynamic_port_start_input$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
-			fi
+			be
 
 			;;
 		*)
@@ -1248,66 +1248,66 @@ v2ray_dynamic_port_start() {
 
 	if [[ $v2ray_dynamic_port_start_input -lt $v2ray_port ]]; then
 		lt_v2ray_port=true
-	fi
+	be
 	if [[ $shadowsocks ]] && [[ $v2ray_dynamic_port_start_input -lt $ssport ]]; then
 		lt_ssport=true
-	fi
+	be
 	if [[ $socks ]] && [[ $v2ray_dynamic_port_start_input -lt $socks_port ]]; then
 		lt_socks_port=true
-	fi
+	be
 	if [[ $mtproto ]] && [[ $v2ray_dynamic_port_start_input -lt $mtproto_port ]]; then
 		lt_mtproto_port=true
-	fi
+	be
 
 }
 
 v2ray_dynamic_port_end() {
 	echo
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray 动态端口结束 "$none"范围 ["$magenta"1-65535"$none"]"
-		read -p "$(echo -e "(默认结束端口: ${cyan}20000$none):")" v2ray_dynamic_port_end_input
+		Echo -e "Please enter "$yellow"V2Ray dynamic port end "$none" range ["$magenta"1-65535"$none"]"
+		Read -p "$(echo -e " (default end port: ${cyan}20000$none):")" v2ray_dynamic_port_end_input
 		[ -z $v2ray_dynamic_port_end_input ] && v2ray_dynamic_port_end_input=20000
 		case $v2ray_dynamic_port_end_input in
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 
 			if [[ $v2ray_dynamic_port_end_input -le $v2ray_dynamic_port_start_input ]]; then
 				echo
-				echo " 不能小于或等于 V2Ray 动态端口开始范围"
+				Echo "cannot be less than or equal to the V2Ray dynamic port start range"
 				echo
-				echo -e " 当前 V2Ray 动态端口开始：${cyan}$v2ray_dynamic_port_start_input${none}"
+				Echo -e " Current V2Ray dynamic port start: ${cyan}$v2ray_dynamic_port_start_input${none}"
 				error
 			elif [ $lt_v2ray_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $v2ray_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 V2Ray 端口..."
+				Echo " V2Ray dynamic port end range cannot include V2Ray port..."
 				echo
-				echo -e " 当前 V2Ray 端口: ${cyan}$v2ray_port$none"
+				Echo -e " current V2Ray port: ${cyan}$v2ray_port$none"
 				error
 			elif [ $lt_ssport ] && [[ ${v2ray_dynamic_port_end_input} -ge $ssport ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 Shadowsocks 端口..."
+				Echo " V2Ray dynamic port end range cannot include Shadowsocks port..."
 				echo
-				echo -e " 当前 Shadowsocks 端口: ${cyan}$ssport$none"
+				Echo -e " Current Shadowsocks port: ${cyan}$ssport$none"
 				error
 			elif [ $lt_socks_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $socks_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 Socks 端口..."
+				Echo " V2Ray dynamic port end range cannot include Socks port..."
 				echo
-				echo -e " 当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e " current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [ $lt_mtproto_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $mtproto_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 MTProto 端口..."
+				Echo " V2Ray dynamic port end range cannot include MTProto port..."
 				echo
-				echo -e " 当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e " Current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
 				echo
-				echo -e "$yellow V2Ray 动态端口结束 = $cyan$v2ray_dynamic_port_end_input$none"
+				Echo -e "$yellow V2Ray dynamic port end = $cyan$v2ray_dynamic_port_end_input$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
-			fi
+			be
 			;;
 		*)
 			error
@@ -1329,18 +1329,18 @@ change_v2ray_dynamicport() {
 		config
 		# clear
 		echo
-		echo -e "$green 动态端口修改成功啦...你不需要修改 V2Ray 客户端配置...保持原有的配置即可...$none"
+		Echo -e "$green Dynamic port modification is successful... you don't need to modify the V2Ray client configuration... keep the original configuration...$none"
 		echo
 	else
 		echo
-		echo -e "$red ...当前传输协议木有启用动态端口...$none"
+		Echo -e "$red ... current transport protocol wood has enabled dynamic port...$none"
 		echo
 		while :; do
-			echo -e "是否需要修改传输协议 [${magenta}Y/N$none]"
+			Echo -e "Do you need to modify the transport protocol [${magenta}Y/N$none]"
 			read -p "$(echo -e "默认 [${cyan}N$none]:")" y_n
 			if [[ -z $y_n ]]; then
 				echo
-				echo -e "$green 已取消修改传输协议...$none"
+				Echo -e "$green has unmodified the transfer protocol...$none"
 				echo
 				break
 			else
@@ -1349,53 +1349,53 @@ change_v2ray_dynamicport() {
 					break
 				elif [[ $y_n == [Nn] ]]; then
 					echo
-					echo -e "$green 已取消修改传输协议...$none"
+					Echo -e "$green has unmodified the transfer protocol...$none"
 					echo
 					break
 				else
 					error
-				fi
-			fi
+				be
+			be
 		done
 
-	fi
+	be
 }
 change_v2ray_dynamic_port_start() {
 	echo
 	echo
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray 动态端口开始 "$none"范围 ["$magenta"1-65535"$none"]"
-		read -p "$(echo -e "(当前动态开始端口: ${cyan}$v2ray_dynamicPort_start$none):")" v2ray_dynamic_port_start_input
+		Echo -e "Please enter "$yellow"V2Ray dynamic port to start "$none" range ["$magenta"1-65535"$none"]"
+		Read -p "$(echo -e "(current dynamic start port: ${cyan}$v2ray_dynamicPort_start$none):")" v2ray_dynamic_port_start_input
 		[ -z $v2ray_dynamic_port_start_input ] && error && continue
 		case $v2ray_dynamic_port_start_input in
 		$v2ray_port)
 			echo
-			echo " 不能和 V2Ray 端口一毛一样...."
+			Echo "Can't be the same as the V2Ray port...."
 			echo
-			echo -e " 当前 V2Ray 端口：${cyan}$v2ray_port${none}"
+			Echo -e " current V2Ray port: ${cyan}$v2ray_port${none}"
 			error
 			;;
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 			if [[ $shadowsocks && $v2ray_dynamic_port_start_input == $ssport ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Shadowsocks 端口冲突...当前 Shadowsocks 端口: ${cyan}$ssport$none"
+				Echo -e "Sorry, this port conflicts with the Shadowsocks port...current Shadowsocks port: ${cyan}$ssport$none"
 				error
 			elif [[ $socks && $v2ray_dynamic_port_start_input == $socks_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 Socks 端口冲突...当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e "Sorry, this port conflicts with the Socks port...current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [[ $mtproto && $v2ray_dynamic_port_start_input == $mtproto_port ]]; then
 				echo
-				echo -e "抱歉, 此端口跟 MTProto 端口冲突...当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e "Sorry, this port conflicts with the MTProto port...current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
 				echo
-				echo -e "$yellow V2Ray 动态端口开始 = $cyan$v2ray_dynamic_port_start_input$none"
+				Echo -e "$yellow V2Ray dynamic port start = $cyan$v2ray_dynamic_port_start_input$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
-			fi
+			be
 
 			;;
 		*)
@@ -1407,65 +1407,65 @@ change_v2ray_dynamic_port_start() {
 
 	if [[ $v2ray_dynamic_port_start_input -lt $v2ray_port ]]; then
 		lt_v2ray_port=true
-	fi
+	be
 	if [[ $shadowsocks ]] && [[ $v2ray_dynamic_port_start_input -lt $ssport ]]; then
 		lt_ssport=true
-	fi
+	be
 	if [[ $socks ]] && [[ $v2ray_dynamic_port_start_input -lt $socks_port ]]; then
 		lt_socks_port=true
-	fi
+	be
 	if [[ $mtproto ]] && [[ $v2ray_dynamic_port_start_input -lt $mtproto_port ]]; then
 		lt_mtproto_port=true
-	fi
+	be
 }
 
 change_v2ray_dynamic_port_end() {
 	echo
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray 动态端口结束 "$none"范围 ["$magenta"1-65535"$none"]"
-		read -p "$(echo -e "(当前动态结束端口: ${cyan}$v2ray_dynamicPort_end$none):")" v2ray_dynamic_port_end_input
+		Echo -e "Please enter "$yellow"V2Ray dynamic port end "$none" range ["$magenta"1-65535"$none"]"
+		Read -p "$(echo -e "(current dynamic end port: ${cyan}$v2ray_dynamicPort_end$none):")" v2ray_dynamic_port_end_input
 		[ -z $v2ray_dynamic_port_end_input ] && error && continue
 		case $v2ray_dynamic_port_end_input in
 		[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
 
 			if [[ $v2ray_dynamic_port_end_input -le $v2ray_dynamic_port_start_input ]]; then
 				echo
-				echo " 不能小于或等于 V2Ray 动态端口开始范围"
+				Echo "cannot be less than or equal to the V2Ray dynamic port start range"
 				echo
-				echo -e " 当前 V2Ray 动态端口开始：${cyan}$v2ray_dynamic_port_start_input${none}"
+				Echo -e " Current V2Ray dynamic port start: ${cyan}$v2ray_dynamic_port_start_input${none}"
 				error
 			elif [ $lt_v2ray_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $v2ray_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 V2Ray 端口..."
+				Echo " V2Ray dynamic port end range cannot include V2Ray port..."
 				echo
-				echo -e " 当前 V2Ray 端口: ${cyan}$v2ray_port$none"
+				Echo -e " current V2Ray port: ${cyan}$v2ray_port$none"
 				error
 			elif [ $lt_ssport ] && [[ ${v2ray_dynamic_port_end_input} -ge $ssport ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 Shadowsocks 端口..."
+				Echo " V2Ray dynamic port end range cannot include Shadowsocks port..."
 				echo
-				echo -e " 当前 Shadowsocks 端口: ${cyan}$ssport$none"
+				Echo -e " Current Shadowsocks port: ${cyan}$ssport$none"
 				error
 			elif [ $lt_socks_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $socks_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 Socks 端口..."
+				Echo " V2Ray dynamic port end range cannot include Socks port..."
 				echo
-				echo -e " 当前 Socks 端口: ${cyan}$socks_port$none"
+				Echo -e " current Socks port: ${cyan}$socks_port$none"
 				error
 			elif [ $lt_mtproto_port ] && [[ ${v2ray_dynamic_port_end_input} -ge $mtproto_port ]]; then
 				echo
-				echo " V2Ray 动态端口结束范围 不能包括 MTProto 端口..."
+				Echo " V2Ray dynamic port end range cannot include MTProto port..."
 				echo
-				echo -e " 当前 MTProto 端口: ${cyan}$mtproto_port$none"
+				Echo -e " Current MTProto port: ${cyan}$mtproto_port$none"
 				error
 			else
 				echo
 				echo
-				echo -e "$yellow V2Ray 动态端口结束 = $cyan$v2ray_dynamic_port_end_input$none"
+				Echo -e "$yellow V2Ray dynamic port end = $cyan$v2ray_dynamic_port_end_input$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
-			fi
+			be
 			;;
 		*)
 			error
@@ -1478,18 +1478,18 @@ change_v2ray_dynamic_port_end() {
 change_v2ray_id() {
 	echo
 	while :; do
-		echo -e "是否确定要修改用户ID [${magenta}Y/N$none]"
+		Echo -e "Are you sure you want to modify the user ID [${magenta}Y/N$none]"
 		read -p "$(echo -e "默认 [${cyan}N$none]:")" y_n
 		if [[ -z $y_n ]]; then
 			echo
-			echo -e "$green 已取消修改用户ID...$none"
+			Echo -e "$green has unmodified user ID...$none"
 			echo
 			break
 		else
 			if [[ $y_n == [Yy] ]]; then
 				echo
 				echo
-				echo -e "$yellow 修改用户ID = $cyan确定$none"
+				Echo -e "$yellow modify user ID = $cyan to determine $none"
 				echo "----------------------------------------------------------------"
 				echo
 				pause
@@ -1502,48 +1502,48 @@ change_v2ray_id() {
 				break
 			elif [[ $y_n == [Nn] ]]; then
 				echo
-				echo -e "$green 已取消修改用户ID...$none"
+				Echo -e "$green has unmodified user ID...$none"
 				echo
 				break
 			else
 				error
-			fi
-		fi
+			be
+		be
 	done
 }
 change_domain() {
 	if [[ $v2ray_transport == [45] ]] && [[ $caddy ]]; then
 		while :; do
 			echo
-			echo -e "请输入一个 $magenta正确的域名$none，一定一定一定要正确，不！能！出！错！"
-			read -p "$(echo -e "(当前域名: ${cyan}$domain$none):") " new_domain
+			Echo -e "Please enter a $magenta correct domain name $none, be sure to be correct, no! Yes! Out! Wrong!"
+			Read -p "$(echo -e "(current domain name: ${cyan}$domain$none):") " new_domain
 			[ -z "$new_domain" ] && error && continue
 			if [[ $new_domain == $domain ]]; then
 				echo
-				echo -e " 跟当前域名一毛一样啊...修改个鸡鸡哦"
+				Echo -e " Same as the current domain name...modify a chicken"
 				echo
 				error && continue
-			fi
+			be
 			echo
 			echo
-			echo -e "$yellow 你的域名 = $cyan$new_domain$none"
+			Echo -e "$yellow your domain name = $cyan$new_domain$none"
 			echo "----------------------------------------------------------------"
 			break
 		done
 		get_ip
 		echo
 		echo
-		echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+		Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 		echo
-		echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+		Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 		echo
-		echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
+		Echo -e "$yellow Please parse $magenta$new_domain$none $yellow to: $cyan$ip$none"
 		echo "----------------------------------------------------------------"
 		echo
 
 		while :; do
 
-			read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") " record
+			Read -p "$(echo -e " (if it has been parsed correctly: [${magenta}Y$none]):") " record
 			if [[ -z "$record" ]]; then
 				error
 			else
@@ -1551,7 +1551,7 @@ change_domain() {
 					domain_check
 					echo
 					echo
-					echo -e "$yellow 域名解析 = ${cyan}我确定已经有解析了$none"
+					Echo -e "$yellow domain name resolution = ${cyan} I'm sure I have parsed $none"
 					echo "----------------------------------------------------------------"
 					echo
 					pause
@@ -1566,51 +1566,51 @@ change_domain() {
 					break
 				else
 					error
-				fi
-			fi
+				be
+			be
 
 		done
 	else
 		echo
-		echo -e "$red 抱歉...不支持修改...$none"
+		Echo -e "$red Sorry... does not support editing...$none"
 		echo
-		echo -e " 备注..修改 TLS 域名仅支持传输协议为 ${yellow}WebSocket + TLS$none 或 ${yellow}HTTP/2$none 并且$yellow 自动配置 TLS = 打开$none"
+		Echo -e " Note: Modifying the TLS domain name only supports the transport protocol as ${yellow}WebSocket + TLS$none or ${yellow}HTTP/2$none and $yellow automatically configures TLS = open $none"
 		echo
-		echo -e " 当前传输协议为: ${cyan}${transport[$v2ray_transport - 1]}${none}"
+		Echo -e " The current transport protocol is: ${cyan}${transport[$v2ray_transport - 1]}${none}"
 		echo
 		if [[ $caddy ]]; then
-			echo -e " 自动配置 TLS = ${cyan}打开$none"
+			Echo -e "automatically configure TLS = ${cyan}open $none"
 		else
-			echo -e " 自动配置 TLS = $red关闭$none"
-		fi
+			Echo -e "automatically configure TLS = $red to turn off $none"
+		be
 		echo
-	fi
+	be
 }
 change_path_config() {
 	if [[ $v2ray_transport == [45] ]] && [[ $caddy && $is_path ]]; then
 		echo
 		while :; do
-			echo -e "请输入想要 ${magenta}用来分流的路径$none , 例如 /233blog , 那么只需要输入 233blog 即可"
-			read -p "$(echo -e "(当前分流的路径: [${cyan}/${path}$none]):")" new_path
+			Echo -e "Please enter the path $none you want ${magenta} to offload, for example /233blog, then just type 233blog."
+			Read -p "$(echo -e " (current shunt path: [${cyan}/${path}$none]):")" new_path
 			[[ -z $new_path ]] && error && continue
 
 			case $new_path in
 			$path)
 				echo
-				echo -e " 大佬...跟 当前分流的路径 一毛一样啊...修改个鸡鸡哦 "
+				Echo -e " Big 佬...the same path as the current shunt...modify a chicken"
 				echo
 				error
 				;;
 			*[/$]*)
 				echo
-				echo -e " 由于这个脚本太辣鸡了..所以分流的路径不能包含$red / $none或$red $ $none这两个符号.... "
+				Echo -e " Since this script is too spicy chicken.. so the shunt path cannot contain $red / $none or $red $ $none...."
 				echo
 				error
 				;;
 			*)
 				echo
 				echo
-				echo -e "$yellow 分流的路径 = ${cyan}/${new_path}$none"
+				Echo -e "$yellow shunt path = ${cyan}/${new_path}$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
@@ -1640,51 +1640,51 @@ change_path_config() {
 		else
 			echo
 			echo
-			echo " 给大佬点赞....好果断的放弃配置 网站伪装 和 路径分流"
+			Echo "Give a big sigh....a good decisive abandonment configuration site camouflage and path diversion"
 			echo
 			echo
-		fi
+		be
 	else
 		echo
-		echo -e "$red 抱歉...不支持修改...$none"
+		Echo -e "$red Sorry... does not support editing...$none"
 		echo
-		echo -e " 备注..修改 分流的路径 仅支持传输协议为 ${yellow}WebSocket + TLS$none 或 ${yellow}HTTP/2$none 并且$yellow 自动配置 TLS = 打开$none"
+		Echo -e " Remarks: Modify the shunt path to only support transport protocol ${yellow}WebSocket + TLS$none or ${yellow}HTTP/2$none and $yellow auto-configure TLS = open $none"
 		echo
-		echo -e " 当前传输协议为: ${cyan}${transport[$v2ray_transport - 1]}${none}"
+		Echo -e " The current transport protocol is: ${cyan}${transport[$v2ray_transport - 1]}${none}"
 		echo
 		if [[ $caddy ]]; then
-			echo -e " 自动配置 TLS = ${cyan}打开$none"
+			Echo -e "automatically configure TLS = ${cyan}open $none"
 		else
-			echo -e " 自动配置 TLS = $red关闭$none"
-		fi
+			Echo -e "automatically configure TLS = $red to turn off $none"
+		be
 		echo
 		change_v2ray_transport_ask
-	fi
+	be
 
 }
 change_proxy_site_config() {
 	if [[ $v2ray_transport == [45] ]] && [[ $caddy && $is_path ]]; then
 		echo
 		while :; do
-			echo -e "请输入 ${magenta}一个正确的$none ${cyan}网址$none 用来作为 ${cyan}网站的伪装$none , 例如 https://liyafly.com"
-			echo -e "举例...你当前的域名是$green $domain $none, 伪装的网址的是 https://liyafly.com"
-			echo -e "然后打开你的域名时候...显示出来的内容就是来自 https://liyafly.com 的内容"
-			echo -e "其实就是一个反代...明白就好..."
-			echo -e "如果不能伪装成功...可以使用 v2ray config 修改伪装的网址"
-			read -p "$(echo -e "(当前伪装的网址: [${cyan}${proxy_site}$none]):")" new_proxy_site
+			Echo -e "Please enter ${magenta} with a correct $none ${cyan} URL $none used as a camouflage $none for the ${cyan} site, eg https://liyafly.com"
+			Echo -e "Example... your current domain name is $green $domain $none, the URL of the disguise is https://liyafly.com"
+			Echo -e "When you open your domain name... the content displayed is the content from https://liyafly.com"
+			Echo -e "is actually an anti-generation...just understand..."
+			Echo -e "If you can't pretend to succeed... you can use v2ray config to modify the spoofed URL"
+			Read -p "$(echo -e " (currently masqueraded URL: [${cyan}${proxy_site}$none]):")" new_proxy_site
 			[[ -z $new_proxy_site ]] && error && continue
 
 			case $new_proxy_site in
 			*[#$]*)
 				echo
-				echo -e " 由于这个脚本太辣鸡了..所以伪装的网址不能包含$red # $none或$red $ $none这两个符号.... "
+				Echo -e " Since this script is too spicy chicken.. so the fake URL cannot contain $red # $none or $red $ $none...."
 				echo
 				error
 				;;
 			*)
 				echo
 				echo
-				echo -e "$yellow 伪装的网址 = ${cyan}${new_proxy_site}$none"
+				Echo -e "$yellow camouflaged URL = ${cyan}${new_proxy_site}$none"
 				echo "----------------------------------------------------------------"
 				echo
 				break
@@ -1697,9 +1697,9 @@ change_proxy_site_config() {
 		caddy_config
 		echo
 		echo
-		echo " 哎哟...好像是修改成功了..."
+		Echo " Oh... it seems that the modification was successful..."
 		echo
-		echo -e " 赶紧打开你的域名 ${cyan}https://${domain}$none 检查一下看看"
+		Echo -e " Quickly open your domain ${cyan}https://${domain}$none Check it out"
 		echo
 		echo
 	elif [[ $v2ray_transport == [45] ]] && [[ $caddy ]]; then
@@ -1717,26 +1717,26 @@ change_proxy_site_config() {
 		else
 			echo
 			echo
-			echo " 给大佬点赞....好果断的放弃配置 网站伪装 和 路径分流"
+			Echo "Give a big sigh....a good decisive abandonment configuration site camouflage and path diversion"
 			echo
 			echo
-		fi
+		be
 	else
 		echo
-		echo -e "$red 抱歉...不支持修改...$none"
+		Echo -e "$red Sorry... does not support editing...$none"
 		echo
-		echo -e " 备注..修改 伪装的网址 仅支持传输协议为 ${yellow}WebSocket + TLS$none 或 ${yellow}HTTP/2$none 并且$yellow 自动配置 TLS = 打开$none"
+		Echo -e " Note: Modifying the spoofed URL only supports the transfer protocol as ${yellow}WebSocket + TLS$none or ${yellow}HTTP/2$none and $yellow automatically configures TLS = open $none"
 		echo
-		echo -e " 当前传输协议为: ${cyan}${transport[$v2ray_transport - 1]}${none}"
+		Echo -e " The current transport protocol is: ${cyan}${transport[$v2ray_transport - 1]}${none}"
 		echo
 		if [[ $caddy ]]; then
-			echo -e " 自动配置 TLS = ${cyan}打开$none"
+			Echo -e "automatically configure TLS = ${cyan}open $none"
 		else
-			echo -e " 自动配置 TLS = $red关闭$none"
-		fi
+			Echo -e "automatically configure TLS = $red to turn off $none"
+		be
 		echo
 		change_v2ray_transport_ask
-	fi
+	be
 
 }
 domain_check() {
@@ -1744,29 +1744,29 @@ domain_check() {
 	test_domain=$(ping $new_domain -c 1 | grep -oE -m1 "([0-9]{1,3}\.){3}[0-9]{1,3}")
 	if [[ $test_domain != $ip ]]; then
 		echo
-		echo -e "$red 检测域名解析错误....$none"
+		Echo -e "$red detects domain name resolution error....$none"
 		echo
-		echo -e " 你的域名: $yellow$new_domain$none 未解析到: $cyan$ip$none"
+		Echo -e " Your domain name: $yellow$new_domain$none Unresolved to: $cyan$ip$none"
 		echo
-		echo -e " 你的域名当前解析到: $cyan$test_domain$none"
+		Echo -e " Your domain name is currently resolved to: $cyan$test_domain$none"
 		echo
-		echo "备注...如果你的域名是使用 Cloudflare 解析的话..在 Status 那里点一下那图标..让它变灰"
+		Echo "Remarks... If your domain name is resolved using Cloudflare.. Click on the icon in Status.. Make it grayed out"
 		echo
 		exit 1
-	fi
+	be
 }
 disable_path() {
 	if [[ $v2ray_transport == [45] ]] && [[ $caddy && $is_path ]]; then
 		echo
 
 		while :; do
-			echo -e "是否关闭 ${yellow}网站伪装 和 路径分流${none} [${magenta}Y/N$none]"
+			Echo -e "Whether to turn off ${yellow} site spoofing and path shunting ${none} [${magenta}Y/N$none]"
 			read -p "$(echo -e "(默认 [${cyan}N$none]):") " y_n
 			[[ -z "$y_n" ]] && y_n="n"
 			if [[ "$y_n" == [Yy] ]]; then
 				echo
 				echo
-				echo -e "$yellow 关闭 网站伪装 和 路径分流 = $cyan是$none"
+				Echo -e "$yellow turn off site spoofing and path shunting = $cyan is $none"
 				echo "----------------------------------------------------------------"
 				echo
 				pause
@@ -1780,57 +1780,57 @@ disable_path() {
 				break
 			elif [[ "$y_n" == [Nn] ]]; then
 				echo
-				echo -e " $green已取消关闭 网站伪装 和 路径分流 ....$none"
+				Echo -e " $green has canceled closing website spoofing and path shunting....$none"
 				echo
 				break
 			else
 				error
-			fi
+			be
 
 		done
 	else
 		echo
-		echo -e "$red 抱歉...不支持修改...$none"
+		Echo -e "$red Sorry... does not support editing...$none"
 		echo
-		echo -e " 当前传输协议为: ${cyan}${transport[$v2ray_transport - 1]}${none}"
+		Echo -e " The current transport protocol is: ${cyan}${transport[$v2ray_transport - 1]}${none}"
 		echo
 		if [[ $caddy ]]; then
-			echo -e " 自动配置 TLS = ${cyan}打开$none"
+			Echo -e "automatically configure TLS = ${cyan}open $none"
 		else
-			echo -e " 自动配置 TLS = $red关闭$none"
-		fi
+			Echo -e "automatically configure TLS = $red to turn off $none"
+		be
 		echo
 		if [[ $is_path ]]; then
-			echo -e " 路径分流 = ${cyan}打开$none"
+			Echo -e "path shunt = ${cyan}open $none"
 		else
-			echo -e " 路径分流 = $red关闭$none"
-		fi
+			Echo -e "path shunt = $red off $none"
+		be
 		echo
-		echo -e " 必须为 WebSocket + TLS 或 HTTP/2 传输协议, 自动配置 TLS = ${cyan}打开$none, 路径分流 = ${cyan}打开$none, 才能修改"
+		Echo -e " must be WebSocket + TLS or HTTP/2 transport protocol, automatically configure TLS = ${cyan} to open $none, path offload = ${cyan} open $none to modify"
 		echo
 
-	fi
+	be
 }
 blocked_hosts() {
 	if [[ $ban_ad ]]; then
-		local _info="$green已开启$none"
+		Local _info="$green has $none turned on"
 	else
-		local _info="$red已关闭$none"
-	fi
+		Local _info="$red has closed $none"
+	be
 	_opt=''
 	while :; do
 		echo
-		echo -e "$yellow 1. $none开启 广告拦截"
+		Echo -e "$yellow 1. $none to turn on ad blocking"
 		echo
-		echo -e "$yellow 2. $none关闭 广告拦截"
+		Echo -e "$yellow 2. $none to turn off ad blocking"
 		echo
-		echo "备注: 广告拦截是基于 域名 拦截的..所以也许会造成浏览网页的时候出现部分元素留白..或者其他问题"
+		Echo "Note: Ad blocking is based on domain name blocking.. So it may cause some elements to appear when browsing the web.. or other issues"
 		echo
-		echo "反馈问题或请求拦截更多域名: https://github.com/233boy/v2ray/issues"
+		Echo "Feedback issue or request to block more domain names: https://github.com/233boy/v2ray/issues"
 		echo
-		echo -e "当前广告拦截状态: $_info"
+		Echo -e "current ad blocking status: $_info"
 		echo
-		read -p "$(echo -e "请选择 [${magenta}1-2$none]:")" _opt
+		Read -p "$(echo -e "Please select [${magenta}1-2$none]:")" _opt
 		if [[ -z $_opt ]]; then
 			error
 		else
@@ -1838,12 +1838,12 @@ blocked_hosts() {
 			1)
 				if [[ $ban_ad ]]; then
 					echo
-					echo -e " 大胸弟...难不成你没有看到 (当前广告拦截状态: $_info) 这个帅帅的提示么.....还开启个鸡鸡哦"
+					Echo -e " Big chest brother... It’s hard not to see you (current ad blocking status: $_info) This handsome reminder.....Open a chicken."
 					echo
 				else
 					echo
 					echo
-					echo -e "$yellow 广告拦截 = $cyan开启$none"
+					Echo -e "$yellow ad blocking = $cyan open $none"
 					echo "----------------------------------------------------------------"
 					echo
 					pause
@@ -1852,51 +1852,51 @@ blocked_hosts() {
 					config
 					echo
 					echo
-					echo -e "$green 广告拦截已开启...如果出现异常..那就关闭它咯$none"
+					Echo -e "$green ad blocking is turned on... if an exception occurs.. then close it and $none"
 					echo
-				fi
+				be
 				break
 				;;
 			2)
 				if [[ $ban_ad ]]; then
 					echo
 					echo
-					echo -e "$yellow 广告拦截 = $cyan关闭$none"
+					Echo -e "$yellow ad blocking = $cyan off $none"
 					echo "----------------------------------------------------------------"
 					echo
 					pause
 					backup_config -ad
-					ban_ad=''
+					ban_ad = ''
 					config
 					echo
 					echo
-					echo -e "$red 广告拦截已关闭...不过你也可以随时重新开启 ...只要你喜欢$none"
+					Echo -e "$red ad blocking is turned off...but you can always re-open it...as long as you like $none"
 					echo
 				else
 					echo
-					echo -e " 大胸弟...难不成你没有看到 (当前广告拦截状态: $_info) 这个帅帅的提示么.....还关闭个鸡鸡哦"
+					Echo -e " Big breasted brother... It’s hard not to see you (current ad blocking status: $_info) This handsome reminder..... also shuts down a chicken"
 					echo
-				fi
+				be
 				break
 				;;
 			*)
 				error
 				;;
 			esac
-		fi
+		be
 	done
 
 }
 change_v2ray_alterId() {
 	echo
 	while :; do
-		echo -e "请输入 ${yellow}alterId${none} 的数值 [${magenta}0-65535$none]"
-		read -p "$(echo -e "(当前数值是: ${cyan}$alterId$none):") " new_alterId
+		Echo -e "Please enter the value of ${yellow}alterId${none} [${magenta}0-65535$none]"
+		Read -p "$(echo -e " (current value is: ${cyan}$alterId$none):") " new_alterId
 		[[ -z $new_alterId ]] && error && continue
 		case $new_alterId in
 		$alterId)
 			echo
-			echo -e " 大佬...跟 当前 alterId 一毛一样啊...修改个鸡鸡哦 "
+			Echo -e " Big 佬... Same as the current alterId...modify a chicken"
 			echo
 			error
 			;;
@@ -1925,19 +1925,19 @@ change_v2ray_alterId() {
 custom_uuid() {
 	echo
 	while :; do
-		echo -e "请输入$yello自定义的 UUID$none...(${cyan}UUID 格式一定要对!!!$none)"
+		Echo -e "Please enter $yello's custom UUID$none...(${cyan}UUID format must be !!!$none)"
 		read -p "$(echo -e "(当前 UUID: ${cyan}${v2ray_id}$none)"): " myuuid
 		[ -z "$myuuid" ] && error && continue
 		case $myuuid in
 		$v2ray_id)
 			echo
-			echo -e " 大佬...跟 当前 UUID 一毛一样啊...修改个鸡鸡哦 "
+			Echo -e " Da Yu... Same as the current UUID... Modify a chicken"
 			echo
 			error
 			;;
 		*[/$]* | *\&*)
 			echo
-			echo -e " 由于这个脚本太辣鸡了..所以 UUID 不能包含$red / $none或$red $ $none或$red & $none这三个符号.... "
+			Echo -e " Since this script is too spicy chicken.. so UUID can't contain $red / $none or $red $ $none or $red & $none these three symbols...."
 			echo
 			error
 			;;
@@ -1946,7 +1946,7 @@ custom_uuid() {
 			echo
 			echo -e "$yellow UUID = $cyan$myuuid$none"
 			echo
-			echo -e " 如果 UUID 格式不正确.. V2Ray 会跪...使用$cyan v2ray reuuid$none 复活"
+			Echo -e " If the UUID is not in the correct format: V2Ray will 跪...relive with $cyan v2ray reuuid$none"
 			echo "----------------------------------------------------------------"
 			echo
 			pause
@@ -1965,17 +1965,17 @@ custom_uuid() {
 v2ray_service() {
 	while :; do
 		echo
-		echo -e "$yellow 1. $none启动 V2Ray"
+		Echo -e "$yellow 1. $none starts V2Ray"
 		echo
 		echo -e "$yellow 2. $none停止 V2Ray"
 		echo
-		echo -e "$yellow 3. $none重启 V2Ray"
+		Echo -e "$yellow 3. $none restart V2Ray"
 		echo
-		echo -e "$yellow 4. $none查看访问日志"
+		Echo -e "$yellow 4. $none view access log"
 		echo
-		echo -e "$yellow 5. $none查看错误日志"
+		Echo -e "$yellow 5. $none view error log"
 		echo
-		read -p "$(echo -e "请选择 [${magenta}1-5$none]:")" _opt
+		Read -p "$(echo -e "Please select [${magenta}1-5$none]:")" _opt
 		if [[ -z $_opt ]]; then
 			error
 		else
@@ -2004,13 +2004,13 @@ v2ray_service() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 start_v2ray() {
 	if [[ $v2ray_pid ]]; then
 		echo
-		echo -e "${green} V2Ray 正在运行...无需再启动$none"
+		Echo -e "${green} V2Ray is running... no need to start $none"
 		echo
 	else
 
@@ -2018,64 +2018,64 @@ start_v2ray() {
 		service v2ray start >/dev/null 2>&1
 		if [[ $? -ne 0 ]]; then
 			echo
-			echo -e "${red} V2Ray 启动失败！$none"
+			Echo -e "${red} V2Ray failed to start! $none"
 			echo
 		else
 			echo
-			echo -e "${green} V2Ray 已启动$none"
+			Echo -e "${green} V2Ray has started $none"
 			echo
-		fi
+		be
 
-	fi
+	be
 }
 stop_v2ray() {
 	if [[ $v2ray_pid ]]; then
 		# systemctl stop v2ray
 		service v2ray stop >/dev/null 2>&1
 		echo
-		echo -e "${green} V2Ray 已停止$none"
+		Echo -e "${green} V2Ray has stopped $none"
 		echo
 	else
 		echo
-		echo -e "${red} V2Ray 没有在运行$none"
+		Echo -e "${red} V2Ray is not running $none"
 		echo
-	fi
+	be
 }
 restart_v2ray() {
 	# systemctl restart v2ray
 	service v2ray restart >/dev/null 2>&1
 	if [[ $? -ne 0 ]]; then
 		echo
-		echo -e "${red} V2Ray 重启失败！$none"
+		Echo -e "${red} V2Ray restart failed! $none"
 		echo
 	else
 		echo
-		echo -e "${green} V2Ray 重启完成 $none"
+		Echo -e "${green} V2Ray restart completes $none"
 		echo
-	fi
+	be
 }
 view_v2ray_log() {
 	echo
-	echo -e "$green 按 Ctrl + C 即可退出...$none"
+	Echo -e "$green Press Ctrl + C to quit...$none"
 	echo
 	tail -f /var/log/v2ray/access.log
 }
 view_v2ray_error_log() {
 	echo
-	echo -e "$green 按 Ctrl + C 即可退出...$none"
+	Echo -e "$green Press Ctrl + C to quit...$none"
 	echo
 	tail -f /var/log/v2ray/error.log
 }
 download_v2ray_config() {
 	while :; do
 		echo
-		echo -e "$yellow 1. $none直接下载 V2Ray 客户端配置文件(仅支持 Xshell)"
+		Echo -e "$yellow 1. $noneDownload the V2Ray client configuration file directly (Xshell only)"
 		echo
-		echo -e "$yellow 2. $none生成 V2Ray 客户端配置文件下载链接"
+		Echo -e "$yellow 2. $none generates V2Ray client configuration file download link"
 		echo
-		echo -e "$yellow 3. $none生成 V2Ray 配置信息链接"
+		Echo -e "$yellow 3. $none generates V2Ray configuration information link"
 		echo
-		echo -e "$yellow 4. $none生成 V2Ray 配置二维码链接"
+		Echo -e "$yellow 4. $none generates V2Ray configuration QR code link"
 		echo
 		read -p "$(echo -e "请选择 [${magenta}1-4$none]:")" other_opt
 		if [[ -z $other_opt ]]; then
@@ -2102,22 +2102,22 @@ download_v2ray_config() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 get_v2ray_config() {
 	config
 	echo
-	echo " 如果你当前使用的 SSH 客户端不是 Xshell 的话...下载 V2Ray 客户端配置文件将会出现卡死情况"
+	Echo " If your current SSH client is not Xshell... downloading the V2Ray client configuration file will result in a stuck condition"
 	echo
 	while :; do
-		read -p "$(echo -e "不要BB...哥就是在使用 Xshell [${magenta}Y$none]:")" is_xshell
+		Read -p "$(echo -e " don't BB... brother is using Xshell [${magenta}Y$none]:")" is_xshell
 		if [[ -z $is_xshell ]]; then
 			error
 		else
 			if [[ $is_xshell == [yY] ]]; then
 				echo
-				echo "开始下载....请选择 V2Ray 客户端配置文件保存位置"
+				Echo "Start downloading....Please select the V2Ray client configuration file save location"
 				echo
 				# sz /etc/v2ray/233blog_v2ray.zip
 				local tmpfile="/tmp/233blog_v2ray_config_$RANDOM.json"
@@ -2125,21 +2125,21 @@ get_v2ray_config() {
 				sz $tmpfile
 				echo
 				echo
-				echo -e "$green 下载完成咯...$none"
+				Echo -e "$green download completed...$none"
 				echo
-				# echo -e "$yellow 解压密码 = ${cyan}233blog.com$none"
+				# echo -e "$yellow Unzip Password = ${cyan}233blog.com$none"
 				# echo
-				echo -e "$yellow SOCKS 监听端口 = ${cyan}2333${none}"
+				Echo -e "$yellow SOCKS listening port = ${cyan}2333${none}"
 				echo
-				echo -e "${yellow} HTTP 监听端口 = ${cyan}6666$none"
+				Echo -e "${yellow} HTTP listening port = ${cyan}6666$none"
 				echo
-				echo "V2Ray 客户端使用教程: https://v2ray6.com/post/4/"
+				Echo "V2Ray client tutorial: https://v2ray6.com/post/4/"
 				echo
 				break
 			else
 				error
-			fi
-		fi
+			be
+		be
 	done
 	[[ -f $tmpfile ]] && rm -rf $tmpfile
 
@@ -2154,90 +2154,90 @@ create_v2ray_config_text() {
 
 	echo
 	echo
-	echo "---------- V2Ray 配置信息 -------------"
+	Echo "---------- V2Ray configuration information -------------"
 	if [[ $v2ray_transport == [45] ]]; then
 		if [[ ! $caddy ]]; then
 			echo
-			echo " 警告！请自行配置 TLS...教程: https://v2ray6.com/post/3/"
-		fi
+			Echo "Warning! Please configure TLS... Tutorial: https://v2ray6.com/post/3/"
+		be
 		echo
-		echo "地址 (Address) = ${domain}"
+		Echo "Address (Address) = ${domain}"
 		echo
-		echo "端口 (Port) = 443"
+		Echo "Port (Port) = 443"
 		echo
 		echo "用户ID (User ID / UUID) = ${v2ray_id}"
 		echo
 		echo "额外ID (Alter Id) = ${alterId}"
 		echo
-		echo "传输协议 (Network) = ${net}"
+		Echo "Transport Protocol (Network) = ${net}"
 		echo
-		echo "伪装类型 (header type) = ${header}"
+		Echo "header type = ${header}"
 		echo
-		echo "伪装域名 (host) = ${domain}"
+		Echo "camouflage domain (host) = ${domain}"
 		echo
-		echo "路径 (path) = ${_path}"
+		Echo "path (path) = ${_path}"
 		echo
 		echo "TLS (Enable TLS) = 打开"
 		echo
 		if [[ $ban_ad ]]; then
-			echo " 备注: 广告拦截已开启.."
+			Echo " Note: Ad blocking is turned on.."
 			echo
-		fi
+		be
 	else
 		[[ -z $ip ]] && get_ip
 		echo
-		echo "地址 (Address) = ${ip}"
+		Echo "Address (Address) = ${ip}"
 		echo
-		echo "端口 (Port) = $v2ray_port"
+		Echo "Port (Port) = $v2ray_port"
 		echo
 		echo "用户ID (User ID / UUID) = ${v2ray_id}"
 		echo
 		echo "额外ID (Alter Id) = ${alterId}"
 		echo
-		echo "传输协议 (Network) = ${net}"
+		Echo "Transport Protocol (Network) = ${net}"
 		echo
-		echo "伪装类型 (header type) = ${header}"
+		Echo "header type = ${header}"
 		echo
-	fi
+	be
 	if [[ $v2ray_transport -ge 18 ]] && [[ $ban_ad ]]; then
-		echo "备注: 动态端口已启用...广告拦截已开启..."
+		Echo "Note: Dynamic port is enabled... Ad blocking is turned on..."
 		echo
 	elif [[ $v2ray_transport -ge 18 ]]; then
-		echo "备注: 动态端口已启用..."
+		Echo "Note: Dynamic port is enabled..."
 		echo
 	elif [[ $ban_ad ]]; then
-		echo "备注: 广告拦截已开启.."
+		Echo "Note: Ad blocking is turned on.."
 		echo
-	fi
+	be
 	echo "---------- END -------------"
 	echo
-	echo "V2Ray 客户端使用教程: https://v2ray6.com/post/4/"
+	Echo "V2Ray client tutorial: https://v2ray6.com/post/4/"
 	echo
 }
 get_v2ray_config_info_link() {
 	echo
-	echo -e "$green 正在生成链接.... 稍等片刻即可....$none"
+	Echo -e "$green is generating a link.... Wait a moment....$none"
 	echo
 	create_v2ray_config_text >/tmp/233blog_v2ray.txt
 	local random=$(echo $RANDOM-$RANDOM-$RANDOM | base64 -w 0)
 	local link=$(curl -s --upload-file /tmp/233blog_v2ray.txt "https://transfer.sh/${random}_v2ray6_v2ray.txt")
 	if [[ $link ]]; then
 		echo
-		echo "---------- V2Ray 配置信息链接-------------"
+		Echo "---------- V2Ray configuration information link -------------"
 		echo
 		echo -e "$yellow 链接 = $cyan$link$none"
 		echo
-		echo -e " V2Ray 客户端使用教程: https://v2ray6.com/post/4/"
+		Echo -e " V2Ray client tutorial: https://v2ray6.com/post/4/"
 		echo
-		echo "备注...链接将在 14 天后失效..."
+		Echo "Remarks... the link will expire after 14 days..."
 		echo
-		echo "提醒...请不要把链接分享出去...除非你有特别的理由...."
+		Echo "Reminder... Please don't share the link... unless you have a special reason..."
 		echo
 	else
 		echo
-		echo -e "$red 哎呀呀呀...出错咯...请重试$none"
+		Echo -e "$red Oh, yeah... wrong... please try $none"
 		echo
-	fi
+	be
 	rm -rf /tmp/233blog_v2ray.txt
 }
 get_v2ray_config_qr_link() {
@@ -2251,7 +2251,7 @@ get_v2ray_vmess_URL_link() {
 	create_vmess_URL_config
 	local vmess="vmess://$(cat /etc/v2ray/vmess_qr.json | base64 -w 0)"
 	echo
-	echo "---------- V2Ray vmess URL / V2RayNG v0.4.1+ / V2RayN v2.1+ / 仅适合部分客户端 -------------"
+	Echo "---------- V2Ray vmess URL / V2RayNG v0.4.1+ / V2RayN v2.1+ / only suitable for some clients -------------"
 	echo
 	echo -e ${cyan}$vmess${none}
 	echo
@@ -2262,11 +2262,11 @@ other() {
 		echo
 		echo -e "$yellow 1. $none安装 BBR"
 		echo
-		echo -e "$yellow 2. $none安装 LotServer(锐速)"
+		Echo -e "$yellow 2. $none installs LotServer"
 		echo
-		echo -e "$yellow 3. $none卸载 LotServer(锐速)"
+		Echo -e "$yellow 3. $none uninstalls LotServer"
 		echo
-		read -p "$(echo -e "请选择 [${magenta}1-3$none]:")" _opt
+		Read -p "$(echo -e "Please select [${magenta}1-3$none]:")" _opt
 		if [[ -z $_opt ]]; then
 			error
 		else
@@ -2287,12 +2287,12 @@ other() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 install_bbr() {
 	local test1=$(sed -n '/net.ipv4.tcp_congestion_control/p' /etc/sysctl.conf)
-	local test2=$(sed -n '/net.core.default_qdisc/p' /etc/sysctl.conf)
+	Local test2 = $ (sed -n '/net.core.default_qdisc/p' /etc/sysctl.conf)
 	if [[ $(uname -r | cut -b 1) -eq 4 ]]; then
 		case $(uname -r | cut -b 3-4) in
 		9. | [1-9][0-9])
@@ -2300,27 +2300,27 @@ install_bbr() {
 				local is_bbr=true
 			else
 				local try_enable_bbr=true
-			fi
+			be
 			;;
 		esac
-	fi
+	be
 	if [[ $is_bbr ]]; then
 		echo
-		echo -e "$green BBR 已经启用啦...无需再安装$none"
+		Echo -e "$green BBR is already enabled... no need to install $none"
 		echo
 	elif [[ $try_enable_bbr ]]; then
-		sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
-		sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
+		But -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
+		But -i '/net.core.default_qdisc/d' /etc/sysctl.conf
 		echo "net.ipv4.tcp_congestion_control = bbr" >>/etc/sysctl.conf
 		echo "net.core.default_qdisc = fq" >>/etc/sysctl.conf
 		sysctl -p >/dev/null 2>&1
 		echo
-		echo -e "$green ..由于你的 VPS 内核支持开启 BBR ...已经为你启用 BBR 优化....$none"
+		Echo -e "$green .. Since your VPS kernel supports turning on BBR...BBR optimization has been enabled for you....$none"
 		echo
 	else
 		# https://teddysun.com/489.html
 		bash <(curl -s -L https://github.com/teddysun/across/raw/master/bbr.sh)
-	fi
+	be
 }
 install_lotserver() {
 	# https://moeclub.org/2017/03/08/14/
@@ -2367,16 +2367,16 @@ open_port() {
 			# 	firewall-cmd --permanent --zone=public --add-port=$multi_port/udp
 			# 	firewall-cmd --reload
 			# fi
-		fi
+		be
 		iptables-save >/etc/iptables.rules.v4
 		ip6tables-save >/etc/iptables.rules.v6
 		# else
 		# 	service iptables save >/dev/null 2>&1
 		# 	service ip6tables save >/dev/null 2>&1
-	fi
+	be
 
 }
-del_port() {
+del_port () {
 	if [[ $cmd == "apt-get" ]]; then
 		if [[ $1 != "multiport" ]]; then
 			# if [[ $cmd == "apt-get" ]]; then
@@ -2400,22 +2400,22 @@ del_port() {
 			# 	firewall-cmd --permanent --zone=public --remove-port=$ports/tcp
 			# 	firewall-cmd --permanent --zone=public --remove-port=$ports/udp
 			# fi
-		fi
+		be
 		iptables-save >/etc/iptables.rules.v4
 		ip6tables-save >/etc/iptables.rules.v6
 		# else
 		# 	service iptables save >/dev/null 2>&1
 		# 	service ip6tables save >/dev/null 2>&1
-	fi
+	be
 }
 update() {
 	while :; do
 		echo
-		echo -e "$yellow 1. $none更新 V2Ray 主程序"
+		Echo -e "$yellow 1. $none update V2Ray main program"
 		echo
-		echo -e "$yellow 2. $none更新 V2Ray 管理脚本"
+		Echo -e "$yellow 2. $none update V2Ray management script"
 		echo
-		read -p "$(echo -e "请选择 [${magenta}1-2$none]:")" _opt
+		Read -p "$(echo -e "Please select [${magenta}1-2$none]:")" _opt
 		if [[ -z $_opt ]]; then
 			error
 		else
@@ -2433,7 +2433,7 @@ update() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 update_v2ray() {
@@ -2445,35 +2445,35 @@ update_v2ray.sh() {
 		local latest_version=$(curl -H 'Cache-Control: no-cache' -s -L "https://raw.githubusercontent.com/233boy/v2ray/test/v2ray.sh" | grep '_version' -m1 | cut -d\" -f2)
 	else
 		local latest_version=$(curl -H 'Cache-Control: no-cache' -s -L "https://raw.githubusercontent.com/233boy/v2ray/master/v2ray.sh" | grep '_version' -m1 | cut -d\" -f2)
-	fi
+	be
 
 	if [[ ! $latest_version ]]; then
 		echo
-		echo -e " $red获取 V2Ray 最新版本失败!!!$none"
+		Echo -e " $red gets the latest version of V2Ray failed!!! $none"
 		echo
-		echo -e " 请尝试执行如下命令: $green echo 'nameserver 8.8.8.8' >/etc/resolv.conf $none"
+		Echo -e " Please try the following command: $green echo 'nameserver 8.8.8.8' >/etc/resolv.conf $none"
 		echo
-		echo " 然后再继续...."
+		Echo " Then continue...."
 		echo
 		exit 1
-	fi
+	be
 
 	if [[ $latest_version == $_version ]]; then
 		echo
-		echo -e "$green 木有发现新版本 $none"
+		Echo -e "$green has found a new version of $none"
 		echo
 	else
 		echo
-		echo -e " $green 咦...发现新版本耶....正在拼命更新.......$none"
+		Echo -e " $green 咦...Found the new version yeah... is desperately updating.......$none"
 		echo
 		cd /etc/v2ray/233boy/v2ray
 		git pull
 		cp -f /etc/v2ray/233boy/v2ray/v2ray.sh $_v2ray_sh
 		chmod +x $_v2ray_sh
 		echo
-		echo -e "$green 更新成功啦...当前 V2Ray 管理脚本 版本: ${cyan}$latest_version$none"
+		Echo -e "$green update succeeded... current V2Ray management script version: ${cyan}$l atest_version$none"
 		echo
-	fi
+	be
 
 }
 uninstall_v2ray() {
@@ -2489,8 +2489,8 @@ config() {
 		else
 			[[ $(pgrep "apache2") ]] && service apache2 stop >/dev/null 2>&1
 			[[ $(command -v apache2) ]] && apt-get remove apache2* -y >/dev/null 2>&1
-		fi
-	fi
+		be
+	be
 	do_service restart v2ray
 }
 backup_config() {
@@ -2600,18 +2600,18 @@ get_ip() {
 	[[ -z $ip ]] && ip=$(curl -s https://api.myip.com | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
 	[[ -z $ip ]] && ip=$(curl -s icanhazip.com)
 	[[ -z $ip ]] && ip=$(curl -s myip.ipip.net | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-	[[ -z $ip ]] && echo -e "\n$red 这垃圾小鸡扔了吧！$none\n" && exit
+	[[ -z $ip ]] && echo -e "\n$red This garbage chick is thrown! $none\n" && exit
 }
 
 error() {
 
-	echo -e "\n$red 输入错误！$none\n"
+	Echo -e "\n$red Input error! $none\n"
 
 }
 
 pause() {
 
-	read -rsp "$(echo -e "按$green Enter 回车键 $none继续....或按$red Ctrl + C $none取消.")" -d $'\n'
+	Read -rsp "$(echo -e "Press $green Enter Enter key $none to continue....or press $red Ctrl + C $none to cancel.")" -d $'\n'
 	echo
 }
 do_service() {
@@ -2619,43 +2619,43 @@ do_service() {
 		systemctl $1 $2
 	else
 		service $2 $1
-	fi
+	be
 }
 _help() {
 	echo
-	echo "........... V2Ray 管理脚本帮助信息 by v2ray6.com .........."
+	Echo "........... V2Ray management script help information by v2ray6.com .........."
 	echo -e "
-	${green}v2ray menu $none管理 V2Ray (同等于直接输入 v2ray)
+	${green}v2ray menu $noneManage V2Ray (equivalent to direct input v2ray)
 
-	${green}v2ray info $none查看 V2Ray 配置信息
+	${green}v2ray info $noneView V2Ray configuration information
 
-	${green}v2ray config $none修改 V2Ray 配置
+	${green}v2ray config $noneModify V2Ray configuration
 
-	${green}v2ray link $none生成 V2Ray 客户端配置文件链接
+	${green}v2ray link $none generates a V2Ray client profile link
 
-	${green}v2ray textlink $none生成 V2Ray 配置信息链接
+	${green}v2ray textlink $none generates V2Ray configuration information link
 
-	${green}v2ray qr $none生成 V2Ray 配置二维码链接
+	${green}v2ray qr $none generates V2Ray configuration QR code link
 
-	${green}v2ray ss $none修改 Shadowsocks 配置
+	${green}v2ray ss $noneModify Shadowsocks configuration
 
-	${green}v2ray ssinfo $none查看 Shadowsocks 配置信息
+	${green}v2ray ssinfo $noneView Shadowsocks configuration information
 
-	${green}v2ray ssqr $none生成 Shadowsocks 配置二维码链接
+	${green}v2ray ssqr $none generates Shadowsocks configuration QR code link
 
-	${green}v2ray status $none查看 V2Ray 运行状态
+	${green}v2ray status $noneView V2Ray running status
 
-	${green}v2ray start $none启动 V2Ray
+	${green}v2ray start $none to start V2Ray
 
-	${green}v2ray stop $none停止 V2Ray
+	${green}v2ray stop $none Stop V2Ray
 
-	${green}v2ray restart $none重启 V2Ray
+	${green}v2ray restart $none restart V2Ray
 
-	${green}v2ray log $none查看 V2Ray 运行日志
+	${green}v2ray log $noneView V2Ray run log
 
 	${green}v2ray update $none更新 V2Ray
 
-	${green}v2ray update.sh $none更新 V2Ray 管理脚本
+	${green}v2ray update.sh $noneUpdate V2Ray management script
 
 	${green}v2ray uninstall $none卸载 V2Ray
 "
@@ -2664,45 +2664,45 @@ menu() {
 	clear
 	while :; do
 		echo
-		echo "........... V2Ray 管理脚本 $_version by v2ray6.com .........."
+		Echo "........... V2Ray management script $_version by v2ray6.com .........."
 		echo
-		echo -e "## V2Ray 版本: $cyan$v2ray_ver$none  /  V2Ray 状态: $v2ray_status ##"
+		Echo -e "## V2Ray Version: $cyan$v2ray_ver$none / V2Ray Status: $v2ray_status ##"
 		echo
-		echo "帮助说明: https://v2ray6.com/post/1/"
+		Echo "Help Description: https://v2ray6.com/post/1/"
 		echo
-		echo "反馈问题: https://github.com/233boy/v2ray/issues"
+		Echo "Feedback question: https://github.com/233boy/v2ray/issues"
 		echo
-		echo "TG 群组: https://t.me/blog233"
+		Echo "TG group: https://t.me/blog233"
 		echo
-		echo "捐赠脚本作者: https://v2ray6.com/donate/"
+		echo "donation script author: https://v2ray6.com/donate/"
 		echo
-		echo "捐助 V2Ray: https://www.v2ray.com/chapter_00/02_donate.html"
+		Echo "Giving V2Ray: https://www.v2ray.com/chapter_00/02_donate.html"
 		echo
-		echo -e "$yellow  1. $none查看 V2Ray 配置"
+		Echo -e "$yellow 1. $none view V2Ray configuration"
 		echo
-		echo -e "$yellow  2. $none修改 V2Ray 配置"
+		Echo -e "$yellow 2. $none modify V2Ray configuration"
 		echo
-		echo -e "$yellow  3. $none下载 V2Ray 配置 / 生成配置信息链接 / 生成二维码链接"
+		Echo -e "$yellow 3. $noneDownload V2Ray Configuration / Generate Configuration Information Link / Generate QR Code Link"
 		echo
-		echo -e "$yellow  4. $none查看 Shadowsocks 配置 / 生成二维码链接"
+		Echo -e "$yellow 4. $noneView Shadowsocks Configuration / Generate QR Code Link"
 		echo
-		echo -e "$yellow  5. $none修改 Shadowsocks 配置"
+		Echo -e "$yellow 5. $none to modify the Shadowsocks configuration"
 		echo
-		echo -e "$yellow  6. $none查看 MTProto 配置 / 修改 MTProto 配置"
+		Echo -e "$yellow 6. $noneView MTProto Configuration / Modify MTProto Configuration"
 		echo
-		echo -e "$yellow  7. $none查看 Socks5 配置 / 修改 Socks5 配置"
+		Echo -e "$yellow 7. $noneView Socks5 Configuration / Modify Socks5 Configuration"
 		echo
-		echo -e "$yellow  8. $none启动 / 停止 / 重启 / 查看日志"
+		Echo -e "$yellow 8. $none start/stop/restart/view log"
 		echo
-		echo -e "$yellow  9. $none更新 V2Ray / 更新 V2Ray 管理脚本"
+		Echo -e "$yellow 9. $none update V2Ray / update V2Ray management script"
 		echo
-		echo -e "$yellow 10. $none卸载 V2Ray"
+		Echo -e "$yellow 10. $none uninstall V2Ray"
 		echo
-		echo -e "$yellow 11. $none其他"
+		Echo -e "$yellow 11. $none other"
 		echo
-		echo -e "温馨提示...如果你不想执行选项...按$yellow Ctrl + C $none即可退出"
+		Echo -e "Tips... if you don't want to execute the option... press $yellow Ctrl + C $none to quit"
 		echo
-		read -p "$(echo -e "请选择菜单 [${magenta}1-11$none]:")" choose
+		Read -p "$(echo -e "Please select the menu [${magenta}1-11$none]:")" choose
 		if [[ -z $choose ]]; then
 			exit 1
 		else
@@ -2757,7 +2757,7 @@ menu() {
 				error
 				;;
 			esac
-		fi
+		be
 	done
 }
 args=$1
@@ -2766,7 +2766,7 @@ case $args in
 menu)
 	menu
 	;;
-i | info)
+and | info)
 	view_v2ray_config_info
 	;;
 c | config)
@@ -2813,10 +2813,10 @@ bt)
 status)
 	echo
 	if [[ $v2ray_transport == [45] && $caddy ]]; then
-		echo -e " V2Ray 状态: $v2ray_status  /  Caddy 状态: $caddy_run_status"
+		Echo -e " V2Ray Status: $v2ray_status / Caddy Status: $caddy_run_status"
 	else
-		echo -e " V2Ray 状态: $v2ray_status"
-	fi
+		Echo -e " V2Ray Status: $v2ray_status"
+	be
 	echo
 	;;
 start)
@@ -2860,7 +2860,7 @@ reinstall)
 		cd
 		cd - >/dev/null 2>&1
 		bash <(curl -s -L https://git.io/v2ray.sh)
-	fi
+	be
 	;;
 [aA][Ii] | [Dd])
 	change_v2ray_alterId
@@ -2878,7 +2878,7 @@ reuuid)
 	;;
 v | version)
 	echo
-	echo -e " 当前 V2Ray 版本: ${green}$v2ray_ver$none  /  当前 V2Ray 管理脚本版本: ${cyan}$_version$none"
+	Echo -e " Current V2Ray Version: ${green}$v2ray_ver$none / Current V2Ray Management Script Version: ${cyan}$_version$none"
 	echo
 	;;
 bbr)
