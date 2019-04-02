@@ -5,7 +5,7 @@ _v2_args() {
 		_path="/$path"
 	else
 		_path="/"
-	fi
+	be
 	case $v2ray_transport in
 	1 | 18)
 		net="tcp"
@@ -70,15 +70,15 @@ _v2_args() {
 	esac
 }
 
-_v2_info() {
+_v2_info () {
 	echo
 	echo
-	echo "---------- V2Ray 配置信息 -------------"
+	Echo "---------- V2Ray configuration information -------------"
 	if [[ $v2ray_transport == [45] ]]; then
 		if [[ ! $caddy ]]; then
 			echo
-			echo -e " $red警告！$none$yellow请自行配置 TLS...教程: https://v2ray6.com/post/3/$none"
-		fi
+			Echo -e " $red warning! $none$yellow please configure TLS... Tutorial: https://v2ray6.com/post/3/$none"
+		be
 		echo
 		echo -e "$yellow 地址 (Address) = $cyan${domain}$none"
 		echo
@@ -88,20 +88,20 @@ _v2_info() {
 		echo
 		echo -e "$yellow 额外ID (Alter Id) = ${cyan}${alterId}${none}"
 		echo
-		echo -e "$yellow 传输协议 (Network) = ${cyan}${net}$none"
+		Echo -e "$yellow transport protocol (Network) = ${cyan}${net}$none"
 		echo
-		echo -e "$yellow 伪装类型 (header type) = ${cyan}${header}$none"
+		Echo -e "$yellow masquerading type (header type) = ${cyan}${header}$none"
 		echo
-		echo -e "$yellow 伪装域名 (host) = ${cyan}${domain}$none"
+		Echo -e "$yellow masquerading domain (host) = ${cyan}${domain}$none"
 		echo
 		echo -e "$yellow 路径 (path) = ${cyan}${_path}$none"
 		echo
 		echo -e "$yellow TLS (Enable TLS) = ${cyan}打开$none"
 		echo
 		if [[ $ban_ad ]]; then
-			echo " 备注: 广告拦截已开启.."
+			Echo " Note: Ad blocking is turned on.."
 			echo
-		fi
+		be
 	else
 		echo
 		echo -e "$yellow 地址 (Address) = $cyan${ip}$none"
@@ -112,25 +112,25 @@ _v2_info() {
 		echo
 		echo -e "$yellow 额外ID (Alter Id) = ${cyan}${alterId}${none}"
 		echo
-		echo -e "$yellow 传输协议 (Network) = ${cyan}${net}$none"
+		Echo -e "$yellow transport protocol (Network) = ${cyan}${net}$none"
 		echo
-		echo -e "$yellow 伪装类型 (header type) = ${cyan}${header}$none"
+		Echo -e "$yellow masquerading type (header type) = ${cyan}${header}$none"
 		echo
-	fi
+	be
 	if [[ $v2ray_transport -ge 18 ]] && [[ $ban_ad ]]; then
-		echo " 备注: 动态端口已启用...广告拦截已开启..."
+		Echo " Note: Dynamic port is enabled... Ad blocking is turned on..."
 		echo
 	elif [[ $v2ray_transport -ge 18 ]]; then
-		echo " 备注: 动态端口已启用..."
+		Echo "Note: Dynamic port is enabled..."
 		echo
 	elif [[ $ban_ad ]]; then
-		echo " 备注: 广告拦截已开启.."
+		Echo " Note: Ad blocking is turned on.."
 		echo
-	fi
+	be
 	echo "---------- END -------------"
 	echo
-	echo "V2Ray 客户端使用教程: https://v2ray6.com/post/4/"
+	Echo "V2Ray client tutorial: https://v2ray6.com/post/4/"
 	echo
-	echo -e "提示: 输入$cyan v2ray url $none可生成 vmess URL 链接 / 输入$cyan v2ray qr $none可生成二维码链接"
+	Echo -e "Hint: Enter $cyan v2ray url $none to generate a vmess URL link / enter $cyan v2ray qr $none to generate a QR code link"
 	echo
 }
